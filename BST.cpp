@@ -208,12 +208,11 @@ bool BST::operator==(const BST &rhs) const
    @return:     true if a new node is created, false otherwise */
 bool BST::insert(Comparable *comp)
 {  
-   // Check if Comparable is present
-   bool present = contains(rootPtr, comp);
+   bool flag = false;
    // add node or increase quantity
-   rootPtr = add(rootPtr, comp);
+   rootPtr = add(rootPtr, comp, flag);
    // return true if not already present
-   return !present;
+   return flag;
 } // end insert
 
 
@@ -226,19 +225,21 @@ bool BST::insert(Comparable *comp)
                 value passed or the quantity is increased.
    @param node: the root node of BST
    @param comp: the Comparable to be passed
+   @param flag: boolean to be returned to insert
    @return:     a pointer to the root node of BST */
-BST::Node* BST::add(Node *node, Comparable *comp)
+BST::Node* BST::add(Node *node, Comparable *comp, bool flag)
 {
    if (node == nullptr) {
       Node* nn = new Node(); // create new node
       nn->item = comp;
       nn->quantity = 1;
       node = nn;
+      flag = true;
    } else if (*(node->item) > *comp) {
-      node->leftChild = add(node->leftChild, comp);
+      node->leftChild = add(node->leftChild, comp, flag);
    } else if (*(node->item) < *comp) {
-      node->rightChild = add(node->rightChild, comp);
-   } else {
+      node->rightChild = add(node->rightChild, comp, flag);
+   } else if (*(node->item) == *comp) {
       node->quantity += 1;
    } // end if
    return node;

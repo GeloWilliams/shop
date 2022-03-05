@@ -194,8 +194,9 @@ class BST {
                       value passed or the quantity is increased.
          @param node: the root node of BST
          @param comp: the Comparable to be passed
+         @param flag: boolean to be returned to insert
          @return:     a pointer to the root node of BST */
-      Node* add(Node *node, Comparable *comp);
+      Node* add(Node *node, Comparable *comp, bool flag);
 
       /**  -----------------------------------------------------------------
          contains
