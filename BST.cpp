@@ -238,6 +238,8 @@ BST::Node* BST::add(Node *node, Comparable *comp, bool flag)
    } else if (*(node->item) < *comp) {
       node->rightChild = add(node->rightChild, comp, flag);
    } else if (*(node->item) == *comp) {
+      // delete item if already exists:
+      delete comp;
       node->quantity += 1;
    } // end if
    return node;
