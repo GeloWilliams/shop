@@ -53,12 +53,15 @@ using namespace std;
    @post:   returns true if *this is less than rhs
    @param:  Product on the righthand side of the equation 
    @return: true if *this is less than rhs, false otherwise */
-bool Product::operator<(const Product &rhs) const
+bool Product::operator<(const Comparable &rhs) const
 {
-   if (name_ < rhs.name_) {
+   // Cast as Product to override Product operator<:
+   const Product &p = static_cast<const Product &>(rhs);
+
+   if (name_ < p.name_) {
       return true;
-   } else if (name_ == rhs.name_) {
-      if (year_ < rhs.year_) {
+   } else if (name_ == p.name_) {
+      if (year_ < p.year_) {
          return true;
       } // end if
    } // end if
@@ -71,9 +74,12 @@ bool Product::operator<(const Product &rhs) const
    @post:      returns true if *this is equal to rhs
    @param rhs: Product on the righthand side of the equation 
    @return:    true if *this is equal to rhs, false otherwise */
-bool Product::operator==(const Product &rhs) const
+bool Product::operator==(const Comparable &rhs) const
 {
-   if (name_ == rhs.name_ && year_ == rhs.year_)
+   // Cast as Product to override Product operator==:
+   const Product &p = static_cast<const Product &>(rhs);
+
+   if (name_ == p.name_ && year_ == p.year_)
       return true;
    else 
       return false;
@@ -92,6 +98,18 @@ Product* Product::build(string description)
    Product* np = new Product();
    string s = description;
    string delimiter = ", ";
+   
+   //parse key
+   string ke = s.substr(0, s.find(delimiter));
+   char keCh = s[0];
+   // erase substring
+   s.erase(0, (s.find(delimiter) + delimiter.length()));
+
+   // parse quantity
+   string qt = s.substr(0, s.find(delimiter));
+   int qtInt = stoi(qt);
+   // erase substring
+   s.erase(0, (s.find(delimiter) + delimiter.length()));
 
    // parse year
    string yr = s.substr(0, s.find(delimiter));
@@ -102,6 +120,8 @@ Product* Product::build(string description)
    // parse name
    string nm = s.substr(0, s.find(delimiter));
    
+   np->key_ = keCh;
+   np->quantity_ = qtInt;
    np->year_ = yrInt;
    np->name_ = nm;
    return np;
@@ -116,7 +136,9 @@ Product* Product::build(string description)
    @return: a full Product description in string format */
 string Product::getItem() const
 {
-   string toReturn = to_string(year_) + ", " + name_;
+   string k(1, key_);
+   string toReturn = k + ", " + to_string(quantity_) + ", " 
+      + to_string(year_) + ", " + name_;
    return toReturn;
 } // end getItem
 

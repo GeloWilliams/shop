@@ -1,15 +1,13 @@
 
 /**
-   g++ -g -std=c++11 -o main main.cpp ProductFactory.cpp Product.cpp Coin.cpp Comic.cpp SportsCard.cpp BST.cpp Comparable.cpp
-   cd Desktop/Main/Study/CSS502/Programs/Program4Test
+   g++ -g -std=c++11 -o main main.cpp ProductFactory.cpp Product.cpp Coin.cpp Comic.cpp SportsCard.cpp BST.cpp
+   cd Desktop/Main/Study/CSS502/Programs/Program4
 */  
 
 #include <iostream>
 #include <sstream>
 #include <vector>
 #include "ProductFactory.h"
-#include "BST.h"
-#include "Comparable.h"
 
 using namespace std;
 
@@ -62,20 +60,22 @@ void test3()
 {
 
    ProductFactory pf;
-   Product* h = pf.create('P',"1998, testing");
-   Product* o = pf.create('P',"2020, messing");
-   Product* q = pf.create('P',"1963, dressing");
-   Product* r = pf.create('P',"2076, feasting");
-   Product* v = pf.create('P',"1999, cresting");
-   Product* c = pf.create('M', "2001, 65, Lincoln Cent");
-   Product* d = pf.create('M', "2015, 70, Abraham Nickel");
-   Product* m = pf.create('C', "2000, Excellent, Lord of the Rings, Tolken");
-   Product* n = pf.create('C', "1992, Decent, Sonic the Hedgehog, BestCorp");
-   Product* t = pf.create('C', "1979, Good, Garfield, TheBest Place");
-   Product* w = pf.create('S', "2002, Near Mint, Ryu the Great, Upper Deck");
-   Product* s = pf.create('S', "2003, Very Good, Ken the Master, Topps"); 
+   
+   Comparable* h = pf.create('P',"P, 3, 1998, testing");
+   Comparable* o = pf.create('P',"P, 1, 2020, messing");
+   Comparable* q = pf.create('P',"P, 6, 1963, dressing");
+   Comparable* r = pf.create('P',"P, 10, 2076, feasting");
+   Comparable* v = pf.create('P',"P, 2, 1999, cresting");
+   Comparable* c = pf.create('M', "M, 7, 2001, 65, Lincoln Cent");
+   Comparable* d = pf.create('M', "M, 6, 2015, 70, Abraham Nickel");
+   Comparable* m = pf.create('C', "C, 1, 2000, Excellent, Lord of the Rings, Tolken");
+   Comparable* n = pf.create('C', "C, 8, 1992, Decent, Sonic the Hedgehog, BestCorp");
+   Comparable* t = pf.create('C', "C, 10, 1979, Good, Garfield, TheBest Place");
+   Comparable* w = pf.create('S', "S, 9, 2002, Near Mint, Ryu the Great, Upper Deck");
+   Comparable* s = pf.create('S', "S, 4, 2003, Very Good, Ken the Master, Topps"); 
 
    pf.print();
+
 
    // Product* a = new Product();
    // Product* b = new Product();
@@ -107,66 +107,94 @@ void test3()
 
 }
 
-
 void test4()
 {
-  std::stringstream ssa("b"); // comp
-  std::stringstream ssb("a"); // fly
-  std::stringstream ssc("c"); // door
-  std::stringstream ssd("f"); // water
+//   std::stringstream ssa("b"); // comp
+//   std::stringstream ssb("a"); // fly
+//   std::stringstream ssc("c"); // door
+//   std::stringstream ssd("f"); // water
 
-  std::stringstream sse("z"); // tv
-  std::stringstream ssf("a"); // air
-  std::stringstream ssg("i"); // clean
-  std::stringstream ssh("t"); // free
+//   std::stringstream sse("z"); // tv
+//   std::stringstream ssf("a"); // air
+//   std::stringstream ssg("i"); // clean
+//   std::stringstream ssh("t"); // free
   
-  std::stringstream ssi("i"); // bed
-  std::stringstream ssj("p"); // snow
-  std::stringstream ssk("i"); // hat
+//   std::stringstream ssi("i"); // bed
+//   std::stringstream ssj("p"); // snow
+//   std::stringstream ssk("i"); // hat
 
-  Comparable* comp = new Comparable;
-  Comparable* fly = new Comparable;
-  Comparable* door = new Comparable;
-  Comparable* water = new Comparable;
-  Comparable* tv = new Comparable;
-  Comparable* air = new Comparable;
-  Comparable* clean = new Comparable;
-  Comparable* free = new Comparable;
-  Comparable* bed = new Comparable;
-  Comparable* snow = new Comparable;
-  Comparable* hat = new Comparable;
+//   Comparable* comp = new Comparable;
+//   Comparable* fly = new Comparable;
+//   Comparable* door = new Comparable;
+//   Comparable* water = new Comparable;
+//   Comparable* tv = new Comparable;
+//   Comparable* air = new Comparable;
+//   Comparable* clean = new Comparable;
+//   Comparable* free = new Comparable;
+//   Comparable* bed = new Comparable;
+//   Comparable* snow = new Comparable;
+//   Comparable* hat = new Comparable;
 
-  ssa >> *comp;
-  ssb >> *fly;
-  ssc >> *door;
-  ssd >> *water;
+//   ssa >> *comp;
+//   ssb >> *fly;
+//   ssc >> *door;
+//   ssd >> *water;
 
-  sse >> *tv;
-  ssf >> *air;
-  ssg >> *clean;
-  ssh >> *free;
+//   sse >> *tv;
+//   ssf >> *air;
+//   ssg >> *clean;
+//   ssh >> *free;
 
-  ssi >> *bed;
-  ssj >> *snow;
-  ssk >> *hat;
+//   ssi >> *bed;
+//   ssj >> *snow;
+//   ssk >> *hat;
 
 
-  BST st1;
+//   BST st1;
   
-  st1.insert(comp);
-  st1.insert(fly);
-  st1.insert(door);
-  st1.insert(water);
-  st1.insert(tv);
-  st1.insert(air);
-  st1.insert(clean);
-  st1.insert(free);
-  st1.insert(bed);
-  st1.insert(snow);
-  st1.insert(hat);
+//   st1.insert(comp);
+//   st1.insert(fly);
+//   st1.insert(door);
+//   st1.insert(water);
+//   st1.insert(tv);
+//   st1.insert(air);
+//   st1.insert(clean);
+//   st1.insert(free);
+//   st1.insert(bed);
+//   st1.insert(snow);
+//   st1.insert(hat);
 
-  cout << st1 << endl;
+//   cout << st1 << endl;
 
+
+}
+
+
+void test5()
+{
+   cout << "-------------------------------------------------------------------"  << endl;
+   BST bt;
+   Comic h;
+   Comic d;
+   Comic a;
+   Comic y;
+   
+
+   Comparable* p = h.build("C, 12, 2000, Excellent, Lord of the Rings, Tolken");
+   Comparable* x = d.build("C, 7, 1979, Good, Garfield, TheBest Place");
+   Comparable* r = a.build("C, 9, 2000, Excellent, Lord of the Rings, Tolken");
+   Comparable* t = y.build("C, 3, 1992, Decent, Sonic the Hedgehog, BestCorp");
+
+   bt.insert(p);
+   bt.insert(x);
+   bt.insert(r);
+   bt.insert(t);
+
+   cout << bt << endl;
+   cout << endl;
+   bt.remove(*x);
+
+   cout << bt << endl;
 
 }
 
@@ -174,8 +202,9 @@ int main()
 {
    // test1();
    // test2();
-   // test3();
-   test4();
+   test3();
+   // test4();
+   test5();
 
 
    return 0;

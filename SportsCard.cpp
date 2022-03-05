@@ -53,7 +53,7 @@ using namespace std;
    @post:   returns true if *this is less than rhs
    @param:  SportsCard on the righthand side of the equation 
    @return: true if *this is less than rhs, false otherwise */
-bool SportsCard::operator<(const Product &rhs) const
+bool SportsCard::operator<(const Comparable &rhs) const
 {
    // Cast as SportsCard to override Product operator<:
    const SportsCard &s = static_cast<const SportsCard &>(rhs);
@@ -83,7 +83,7 @@ bool SportsCard::operator<(const Product &rhs) const
    @post:      returns true if *this is equal to rhs
    @param rhs: SportsCard on the righthand side of the equation 
    @return:    true if *this is equal to rhs, false otherwise */
-bool SportsCard::operator==(const Product &rhs) const
+bool SportsCard::operator==(const Comparable &rhs) const
 {
    // Cast as SportsCard to override Product operator==:
    const SportsCard &s = static_cast<const SportsCard &>(rhs);
@@ -109,6 +109,18 @@ SportsCard* SportsCard::build(string description)
    string s = description;
    string delimiter = ", ";
 
+   //parse key
+   string ke = s.substr(0, s.find(delimiter));
+   char keCh = s[0];
+   // erase substring
+   s.erase(0, (s.find(delimiter) + delimiter.length()));
+
+   // parse quantity
+   string qt = s.substr(0, s.find(delimiter));
+   int qtInt = stoi(qt);
+   // erase substring
+   s.erase(0, (s.find(delimiter) + delimiter.length()));
+
    // parse year
    string yr = s.substr(0, s.find(delimiter));
    int yrInt = stoi(yr);
@@ -128,6 +140,8 @@ SportsCard* SportsCard::build(string description)
    // parse manufacturer
    string mn = s.substr(0, s.find(delimiter));
 
+   sc->key_ = keCh;
+   sc->quantity_ = qtInt;
    sc->year_ = yrInt;
    sc->grade_ = gd;
    sc->player_ = pl;
@@ -145,7 +159,9 @@ SportsCard* SportsCard::build(string description)
    @return: a full SportsCard description in string format */
 string SportsCard::getItem() const
 {
-   string toReturn = to_string(year_) + ", " + grade_ + ", " + player_ + ", " + manufacturer_;
+   string k(1, key_);
+   string toReturn = k + ", " + to_string(quantity_) + ", " 
+      + to_string(year_) + ", " + grade_ + ", " + player_ + ", " + manufacturer_;
    return toReturn;
 } // end getItem
 

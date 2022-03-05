@@ -46,14 +46,18 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "BST.h"
 #include "Product.h"
+#include "Coin.h"
+#include "Comic.h"
+#include "SportsCard.h"
 
 using namespace std;
 
 
 static const int BUCKETS_ = 11; // set to a prime number
 
-class Product; // forward declaration
+class BST; // forward declaration
 class ProductFactory {
    public:
       /**  -----------------------------------------------------------------
@@ -79,7 +83,7 @@ class ProductFactory {
          @param key:  returned index from hashFunction
          @param item: a Product* object
          @return:     true if insertion is succesful, false otherwise. */
-      void insertItem(char key, Product* item);
+      void insertItem(char key, Comparable *&item);
 
       /**  -----------------------------------------------------------------
          create
@@ -90,19 +94,11 @@ class ProductFactory {
          @param key:         the correlating key for a specific Product
          @param description: the full description of the Product
          @return:            a new Product* with attributes written */
-      Product* create(char key, string description);
+      Comparable* create(char key, string description);
 
       /* TEST */
       void print();
 
-      struct HashNode {
-         /** pointer to a Product */
-         Product* item_;
-
-         /** pointer to the next HashNode */
-         HashNode* next_;
-      };
-
-      /** array holding HashNode objects */
-      HashNode* hashTable_[BUCKETS_];
+      /** array holding BSTs */
+      BST hashTable_[BUCKETS_];
 };

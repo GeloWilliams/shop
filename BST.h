@@ -47,7 +47,7 @@
 #include <iostream>
 #include <vector>
 #include "Comparable.h"
-#include "ProductFactory.h"
+
 using namespace std;
 
 class BST {
@@ -101,6 +101,7 @@ class BST {
          @post:       a node is created with the value passed or the quantity is
                       increased.
          @param comp: the Comparable to be passed
+         @param key:  the key for the item type
          @return:     true if a new node is created, false otherwise */
       bool insert(Comparable *comp);
 
@@ -122,7 +123,7 @@ class BST {
          @post:       none.
          @param comp: the Comparable to be found
          @return:     a Comparable pointer */
-      const Comparable* retrieve(const Comparable &comp) const;
+      Comparable* retrieve(const Comparable &comp) const;
 
       /**  -----------------------------------------------------------------
          Output Stream operator
@@ -138,14 +139,12 @@ class BST {
       struct Node {
          /**  -----------------------------------------------------------------
             Constructor */
-         Node() : item(nullptr), quantity(0),
-            leftChild(nullptr), rightChild(nullptr) {}
+         Node() : item(nullptr), leftChild(nullptr), rightChild(nullptr) {}
 
          /** item: A Comparable pointer */
          Comparable *item;
-         /** quantity: Holds the number of times the value is present within 
-            BST */
-         int quantity;
+         /** quantity: Holds the number of times the value 
+            is present within BST */
          Node *leftChild;
          /** rightChild: A pointer to the right child of current node */
          Node *rightChild;
@@ -195,6 +194,7 @@ class BST {
          @param node: the root node of BST
          @param comp: the Comparable to be passed
          @param flag: boolean to be returned to insert
+         @param key:  the key for the item type
          @return:     a pointer to the root node of BST */
       Node* add(Node *node, Comparable *comp, bool flag);
 
@@ -231,7 +231,7 @@ class BST {
       void removeRoot(Node *&node);
 
       /**  -----------------------------------------------------------------
-         lMaxandComp
+         lMax
          -- Helper method for removeRoot, responsible for finding the most-right
             descendant of the left subtree for the target node to be removed;
             returns the Comparable value
@@ -240,19 +240,7 @@ class BST {
                       its Comparable is copied.
          @param node: the target node to be removed
          @return:     a pointer to the Comparable */
-      Comparable* lMaxAndComp(Node *&node) const;
-
-      /**  -----------------------------------------------------------------
-         lMaxandInt
-          -- Helper method for removeRoot, responsible for finding the most-right
-             descendant of the left subtree for the target node to be removed;
-             returns the quantity value
-         @pre:        none. 
-         @post:       the most-right node of the left subtree is removed and 
-                      its Comparable is copied.
-         @param node: the target node to be removed
-         @return:     a integer value, representing quantity */
-      int lMaxAndInt(const Node *node) const;
+      Comparable* lMax(Node *&node) const;
 
       /**  -----------------------------------------------------------------
          fetch

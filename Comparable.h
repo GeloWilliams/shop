@@ -46,38 +46,57 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "ProductFactory.h"
 using namespace std;
 
 class Comparable {
    public:
       /**  -----------------------------------------------------------------
-         Comparison operator */
-      bool operator==(const Comparable &rhs) const;
+         Constructor 
+         @pre:  none.
+         @post: a new Comparable object has been instantiated. */
+      Comparable() : key_(' ') {}
 
       /**  -----------------------------------------------------------------
-         Not-Equal operator */
-      bool operator!=(const Comparable &rhs) const;
+         Destructor
+         @pre:  the Constructor has been called.
+         @post: all data that was dynamically allocated has been removed and deallocated. */
+      virtual ~Comparable() {}
 
       /**  -----------------------------------------------------------------
-         Less Than operator */
-      bool operator<(const Comparable &rhs) const;
+         Less Than Operator 
+         @pre:       none.
+         @post:      returns true if *this is less than rhs
+         @param rhs: Comparable on the righthand side of the equation 
+         @return:    true if *this is less than rhs, false otherwise */
+      virtual bool operator<(const Comparable &rhs) const { return false; }
 
       /**  -----------------------------------------------------------------
-         Greater Than operator */
-      bool operator>(const Comparable &rhs) const;
-      
-      /**  -----------------------------------------------------------------
-         Input stream operator
-         Reads characters and creates a vector of Comparables */
-      friend std::istream& operator>>(std::istream &in, Comparable &comp);
+         Equal To Operator 
+         @pre:       none.
+         @post:      returns true if *this is equal to rhs
+         @param rhs: Comparable on the righthand side of the equation 
+         @return:    true if *this is equal to rhs, false otherwise */
+      virtual bool operator==(const Comparable &rhs) const { return false; }
 
       /**  -----------------------------------------------------------------
-         Output stream operator
-         Prints a chain of Comparables, separated by spaces */
-      friend std::ostream& operator<<(std::ostream &out, const Comparable &comp);
+         build
+         -- Creates a new Comparable*
+         -- Receives a description for the Comparable that is parsed for attributes
+         @pre:    *this has been instantiated
+         @post:   a new Comparable* with attributes written is returned to the caller
+         @return: a new dynamically allocated Comparable* */ 
+      virtual Comparable* build(string description) { return nullptr; }
 
-   private:
-      /* The single data member, an ASCII character */
-      char c_;
+      /**  -----------------------------------------------------------------
+         getItem
+         -- a string containing the Comparable description is returned. Each detail is separated by a 
+            comma allowing the entire Comparable description to be presented on one line
+         @pre:    each data member in *this must contain an initialized value
+         @post:   a string containing the values for each data member is returned to the caller 
+         @return: a full Comparable description in string format */
+      virtual string getItem() const { return ""; }
+
+   protected:
+      /** The Comparable key */
+      char key_;
 };

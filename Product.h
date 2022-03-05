@@ -46,10 +46,11 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "ProductFactory.h"
+#include "Comparable.h"
+
 using namespace std;
 
-class Product {
+class Product : public Comparable {
    public:
       /**  -----------------------------------------------------------------
          Constructor 
@@ -69,7 +70,7 @@ class Product {
          @post:      returns true if *this is less than rhs
          @param rhs: Product on the righthand side of the equation 
          @return:    true if *this is less than rhs, false otherwise */
-      virtual bool operator<(const Product &rhs) const;
+      virtual bool operator<(const Comparable &rhs) const;
 
       /**  -----------------------------------------------------------------
          Equal To Operator 
@@ -77,7 +78,7 @@ class Product {
          @post:      returns true if *this is equal to rhs
          @param rhs: Product on the righthand side of the equation 
          @return:    true if *this is equal to rhs, false otherwise */
-      virtual bool operator==(const Product &rhs) const;
+      virtual bool operator==(const Comparable &rhs) const;
 
       /**  -----------------------------------------------------------------
          build
@@ -103,5 +104,9 @@ class Product {
       
       /** The year in which *this was released */
       int year_;   
+
+      /** The quantity of *this product */
+      int quantity_;
+      
 };
 

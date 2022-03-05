@@ -46,6 +46,7 @@
 #include <iostream>
 #include <vector>
 #include "BST.h"
+
 using namespace std;
 
 /**  -----------------------------------------------------------------
@@ -79,7 +80,6 @@ BST::Node* BST::copyTree(const Node *node) const
 
    nc = node->item;
    nn->item = nc;
-   nn->quantity = node->quantity;
    
    // Visit left & right children
    nn->leftChild = copyTree(node->leftChild);
@@ -158,7 +158,6 @@ bool BST::treeCheck(Node *nodeA, Node *nodeB) const
          return false;
    } else {
       if(nodeA->item == nodeB->item 
-         && nodeA->quantity == nodeB->quantity
          && treeCheck(nodeA->leftChild, nodeB->leftChild)
          && treeCheck(nodeA->rightChild, nodeB->rightChild)) {
          return true;  
@@ -203,6 +202,7 @@ bool BST::operator==(const BST &rhs) const
    @post:       a node is created with the value passed or the quantity is
                 increased.
    @param comp: the Comparable to be passed
+   @param key:  the key for the item type
    @return:     true if a new node is created, false otherwise */
 bool BST::insert(Comparable *comp)
 {  
@@ -224,23 +224,22 @@ bool BST::insert(Comparable *comp)
    @param node: the root node of BST
    @param comp: the Comparable to be passed
    @param flag: boolean to be returned to insert
+   @param key:  the key for the item type
    @return:     a pointer to the root node of BST */
 BST::Node* BST::add(Node *node, Comparable *comp, bool flag)
 {
    if (node == nullptr) {
       Node* nn = new Node(); // create new node
       nn->item = comp;
-      nn->quantity = 1;
       node = nn;
       flag = true;
-   } else if (*(node->item) > *comp) {
+   } else if (*comp < *(node->item)) {
       node->leftChild = add(node->leftChild, comp, flag);
    } else if (*(node->item) < *comp) {
       node->rightChild = add(node->rightChild, comp, flag);
    } else if (*(node->item) == *comp) {
       // delete item if already exists:
       delete comp;
-      node->quantity += 1;
    } // end if
    return node;
 } // end add
@@ -260,7 +259,7 @@ bool BST::contains(Node *node, Comparable *comp) const
    if (node == nullptr) {
       return false;
    } else {
-      if (*(node->item) > *comp) {
+      if (*comp < *(node->item)) {
          return contains(node->leftChild, comp);
       } else if (*(node->item) < *comp) {
          return contains(node->rightChild, comp);
@@ -300,10 +299,7 @@ bool BST::deleteNode(Node *&node, const Comparable &comp)
    if (node == nullptr)
       return false;
    else if (comp == *node->item) {
-      if (node->quantity < 2)
          removeRoot(node);
-      else
-         node->quantity -= 1;
       return true;
    } else if (comp < *node->item)
       return deleteNode(node->leftChild, comp);
@@ -344,14 +340,13 @@ void BST::removeRoot(Node *&node)
    } 
    // Case 3 : Two Children Parent:
    else {
-      node->quantity = lMaxAndInt(node->leftChild);
-      node->item = lMaxAndComp(node->leftChild);
+      node->item = lMax(node->leftChild);
    } // end if
 } // end removeRoot
 
 
 /**  -----------------------------------------------------------------
-   lMaxandComp
+   lMax
    -- Helper method for removeRoot, responsible for finding the most-right
       descendant of the left subtree for the target node to be removed;
       returns the Comparable value
@@ -360,7 +355,7 @@ void BST::removeRoot(Node *&node)
                 its Comparable is copied.
    @param node: the target node to be removed
    @return:     a pointer to the Comparable */
-Comparable* BST::lMaxAndComp(Node *&node) const
+Comparable* BST::lMax(Node *&node) const
 {
    if (node->rightChild == nullptr) {
       // Get this node's value
@@ -371,31 +366,9 @@ Comparable* BST::lMaxAndComp(Node *&node) const
       delete nodeToDelete;
       return comp;
    } else {
-      return lMaxAndComp(node->rightChild);
+      return lMax(node->rightChild);
    } // end if
-} // end lMaxAndComp
-
-
-/**  -----------------------------------------------------------------
-   lMaxandInt
-   -- Helper method for removeRoot, responsible for finding the most-right
-      descendant of the left subtree for the target node to be removed;
-      returns the quantity value
-   @pre:        none. 
-   @post:       the most-right node of the left subtree is removed and 
-                its Comparable is copied.
-   @param node: the target node to be removed
-   @return:     a integer value, representing quantity */
-int BST::lMaxAndInt(const Node *node) const
-{
-   if (node->rightChild == nullptr) {
-      // Get this node's quantity
-      int val = node->quantity;
-      return val;
-   } else {
-      return lMaxAndInt(node->rightChild);
-   } // end if
-} // end lMaxAndInt
+} // end lMax
 
 
 /**  -----------------------------------------------------------------
@@ -405,7 +378,7 @@ int BST::lMaxAndInt(const Node *node) const
    @post:       none.
    @param comp: the Comparable to be found
    @return:     a Comparable pointer */
-const Comparable* BST::retrieve(const Comparable &comp) const
+Comparable* BST::retrieve(const Comparable &comp) const
 {
    Comparable* target = fetch(rootPtr, comp);
    return target;
@@ -425,7 +398,7 @@ Comparable* BST::fetch(Node *node, const Comparable &comp) const
 {
    if (node == nullptr) {
       return nullptr;
-   } else if (*node->item > comp) {
+   } else if (comp < *node->item) {
       return fetch(node->leftChild, comp);
    } else if (*node->item < comp) {
       return fetch(node->rightChild, comp);
@@ -448,7 +421,11 @@ Comparable* BST::fetch(Node *node, const Comparable &comp) const
    @param node: node of BST, starting at root node */
 std::ostream& operator<<(std::ostream &out, BST& BT)
 {
-   BT.printInorder(out, BT.rootPtr);
+   if (BT.rootPtr != nullptr) {
+      BT.printInorder(out, BT.rootPtr);
+   } else {
+      out << "Tree is empty." << endl;
+   }
    return out;
 }
 
@@ -465,7 +442,7 @@ void BST::printInorder(std::ostream& out, Node* node) const
 {
    if (node != nullptr) {
       printInorder(out, node->leftChild);
-      out << *node->item << node->quantity << std::endl;
+      out  << node->item->getItem() << std::endl;
       printInorder(out, node->rightChild);
    } // end if
 } // end printInorder

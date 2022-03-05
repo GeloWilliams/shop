@@ -46,9 +46,7 @@
 #include <iostream>
 #include <vector>
 #include "ProductFactory.h"
-#include "Coin.h"
-#include "Comic.h"
-#include "SportsCard.h"
+
 
 using namespace std;
 
@@ -59,23 +57,8 @@ using namespace std;
 ProductFactory::ProductFactory()
 {
    for (int i = 0; i < BUCKETS_; i++) {
-      hashTable_[i] = nullptr;
+
    } // end for 
-
-   // Dummy items:
-   Product* p = new Product();
-   insertItem('P', p);
-
-   Coin* m = new Coin();
-   insertItem('M', m);
-
-   Comic* c = new Comic();
-   insertItem('C', c);
-
-   SportsCard* s = new SportsCard();
-   insertItem('S', s);
-
-
 } // end Constructor
 
 /**  -----------------------------------------------------------------
@@ -110,40 +93,10 @@ int ProductFactory::hashFunction(char key)
    @param key:  returned index from hashFunction
    @param item: a Product* object
    @return:     true if insertion is succesful, false otherwise. */
-void ProductFactory::insertItem(char key, Product* item)
+void ProductFactory::insertItem(char key, Comparable *&item)
 {
    int hashValue = hashFunction(key);
-
-   // if head:
-   if (hashTable_[hashValue] == nullptr) {
-      HashNode* nn = new HashNode();
-      nn->item_ = item;
-      nn->next_ = nullptr;
-      hashTable_[hashValue] = nn;
-   } else {
-      HashNode *cur = hashTable_[hashValue];
-      HashNode* nn = new HashNode();
-      nn->item_ = item;
-
-      while (cur->next_ != nullptr) {
-         if (*cur->next_->item_ < *item) {
-            cur = cur->next_;
-         } else {
-            break;
-         } // end if
-      } // end while
-
-      // if next is null
-      if (cur->next_ == nullptr) {
-         nn->next_ = nullptr;
-         cur->next_ = nn;
-      } // end if
-      else {
-         nn->next_ = cur->next_;
-         cur->next_ = nn;
-      }
-   } // end if
-
+   hashTable_[hashValue].insert(item);
 } // end insertItem
 
 
@@ -156,13 +109,30 @@ void ProductFactory::insertItem(char key, Product* item)
    @param key:         the correlating key for a specific Product
    @param description: the full description of the Product
    @return:            a new Product* with attributes written */
-Product* ProductFactory::create(char key, string description)
+Comparable* ProductFactory::create(char key, string description)
 {
-   int hash = hashFunction(key);
-   Product* h = hashTable_[hash]->item_->build(description);
-   insertItem(key, h);
-   return h;
-   
+   if (key == 'P') {
+      Product p;
+      Comparable* pp = p.build(description);
+      insertItem(key, pp);
+      return pp;
+   } else if (key == 'M') {
+      Coin m;
+      Comparable* mp = m.build(description);
+      insertItem(key, mp);
+      return mp;
+   } else if (key == 'C') {
+      Comic c;
+      Comparable* cp = c.build(description);
+      insertItem(key, cp);
+      return cp;
+   } else if (key == 'S') {
+      SportsCard s;
+      Comparable* sp = s.build(description);
+      insertItem(key, sp);
+      return sp;
+   }
+   return nullptr;
 } // end create
 
 
@@ -170,17 +140,6 @@ Product* ProductFactory::create(char key, string description)
 void ProductFactory::print()
 {
    for (int i = 0; i < BUCKETS_; i++) {
-      if (hashTable_[i] != nullptr) {
-         cout << i << " : " << hashTable_[i]->item_->getItem() << endl;
-         HashNode* cur = hashTable_[i];
-         while (cur != nullptr) {
-            if (cur->next_ != nullptr) {
-               cout << i << " : " << cur->next_->item_->getItem() << endl;
-               cur = cur->next_;
-            } else {
-               break;
-            }
-         }
-      }
+         cout << hashTable_[i] << endl;
    }
 }

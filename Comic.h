@@ -47,8 +47,10 @@
 #include <iostream>
 #include <vector>
 #include "Product.h"
+
 using namespace std;
 
+class Comparable;
 class Comic : public Product {
    public:
       /**  -----------------------------------------------------------------
@@ -70,7 +72,7 @@ class Comic : public Product {
          @post:      returns true if *this is less than rhs
          @param rhs: Comic on the righthand side of the equation 
          @return:    true if *this is less than rhs, false otherwise */
-      virtual bool operator<(const Product &rhs) const;
+      virtual bool operator<(const Comparable &rhs) const;
 
       /**  -----------------------------------------------------------------
          Equal To Operator 
@@ -78,7 +80,7 @@ class Comic : public Product {
          @post:      returns true if *this is equal to rhs
          @param rhs: Comic on the righthand side of the equation 
          @return:    true if *this is equal to rhs, false otherwise */
-      virtual bool operator==(const Product &rhs) const;
+      virtual bool operator==(const Comparable &rhs) const;
 
       /**  -----------------------------------------------------------------
          build

@@ -53,7 +53,7 @@ using namespace std;
    @post:   returns true if *this is less than rhs
    @param:  Comic on the righthand side of the equation 
    @return: true if *this is less than rhs, false otherwise */
-bool Comic::operator<(const Product &rhs) const
+bool Comic::operator<(const Comparable &rhs) const
 {
    // Cast as Comic to override Product operator<:
    const Comic &c = static_cast<const Comic &>(rhs);
@@ -83,7 +83,7 @@ bool Comic::operator<(const Product &rhs) const
    @post:      returns true if *this is equal to rhs
    @param rhs: Comic on the righthand side of the equation 
    @return:    true if *this is equal to rhs, false otherwise */
-bool Comic::operator==(const Product &rhs) const
+bool Comic::operator==(const Comparable &rhs) const
 {
    // Cast as Comic to override Product operator==:
    const Comic &c = static_cast<const Comic &>(rhs);
@@ -109,6 +109,18 @@ Comic* Comic::build(string description)
    string s = description;
    string delimiter = ", ";
 
+   //parse key
+   string ke = s.substr(0, s.find(delimiter));
+   char keCh = s[0];
+   // erase substring
+   s.erase(0, (s.find(delimiter) + delimiter.length()));
+
+   // parse quantity
+   string qt = s.substr(0, s.find(delimiter));
+   int qtInt = stoi(qt);
+   // erase substring
+   s.erase(0, (s.find(delimiter) + delimiter.length()));
+
    // parse year
    string yr = s.substr(0, s.find(delimiter));
    int yrInt = stoi(yr);
@@ -128,6 +140,9 @@ Comic* Comic::build(string description)
    // parse publisher
    string pb = s.substr(0, s.find(delimiter));
 
+
+   nc->key_ = keCh;
+   nc->quantity_ = qtInt;
    nc->year_ = yrInt;
    nc->grade_ = gd;
    nc->title_ = tl;
@@ -145,7 +160,9 @@ Comic* Comic::build(string description)
    @return: a full Comic description in string format */
 string Comic::getItem() const
 {
-   string toReturn = to_string(year_) + ", " + grade_ + ", " + title_ + ", " + publisher_;
+   string k(1, key_);
+   string toReturn = k + ", " + to_string(quantity_) + ", "
+      + to_string(year_) + ", " + grade_ + ", " + title_ + ", " + publisher_;
    return toReturn;
 } // end getItem
 

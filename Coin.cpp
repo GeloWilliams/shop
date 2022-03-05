@@ -53,7 +53,7 @@ using namespace std;
    @post:   returns true if *this is less than rhs
    @param:  Coin on the righthand side of the equation 
    @return: true if *this is less than rhs, false otherwise */
-bool Coin::operator<(const Product &rhs) const
+bool Coin::operator<(const Comparable &rhs) const
 {
    // Cast as Coin to override Product operator<:
    const Coin &m = static_cast<const Coin &>(rhs);
@@ -79,7 +79,7 @@ bool Coin::operator<(const Product &rhs) const
    @post:      returns true if *this is equal to rhs
    @param rhs: Coin on the righthand side of the equation 
    @return:    true if *this is equal to rhs, false otherwise */
-bool Coin::operator==(const Product &rhs) const
+bool Coin::operator==(const Comparable &rhs) const
 {
    // Cast as Coin to override Product operator==:
    const Coin &m = static_cast<const Coin &>(rhs);
@@ -104,6 +104,18 @@ Coin* Coin::build(string description)
    string s = description;
    string delimiter = ", ";
 
+   //parse key
+   string ke = s.substr(0, s.find(delimiter));
+   char keCh = s[0];
+   // erase substring
+   s.erase(0, (s.find(delimiter) + delimiter.length()));
+
+   // parse quantity
+   string qt = s.substr(0, s.find(delimiter));
+   int qtInt = stoi(qt);
+   // erase substring
+   s.erase(0, (s.find(delimiter) + delimiter.length()));
+
    // parse year
    string yr = s.substr(0, s.find(delimiter));
    int yrInt = stoi(yr);
@@ -119,6 +131,9 @@ Coin* Coin::build(string description)
    // parse type
    string tp = s.substr(0, s.find(delimiter));
    
+
+   nm->key_ = keCh;
+   nm->quantity_ = qtInt;
    nm->year_ = yrInt;
    nm->grade_ = gdInt;
    nm->type_ = tp;
@@ -135,7 +150,9 @@ Coin* Coin::build(string description)
    @return: a full Coin description in string format */
 string Coin::getItem() const
 {
-   string toReturn = to_string(year_) + ", " + to_string(grade_) + ", " + type_;
+   string k(1, key_);
+   string toReturn = k + ", " + to_string(quantity_) + ", " 
+      + to_string(year_) + ", " + to_string(grade_) + ", " + type_;
    return toReturn;
 } // end getItem
 
