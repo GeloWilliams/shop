@@ -109,14 +109,12 @@ BST::~BST()
    @param node: the root node of the BST to be cleared. */
 void BST::clearTree(Node *node)
 {
-   // deallocate data first
-   delete node->item;
-
    if (node != nullptr) {
       if (node->leftChild != nullptr)
          clearTree(node->leftChild);
       if (node->rightChild != nullptr)
          clearTree(node->rightChild);
+      delete node->item;
       delete node;
       node = nullptr;
    } // end if
@@ -203,7 +201,7 @@ bool BST::operator==(const BST &rhs) const
       quantity of 1 or increases quantity by 1
    @pre         none. 
    @post:       a node is created with the value passed or the quantity is
-                  increased.
+                increased.
    @param comp: the Comparable to be passed
    @return:     true if a new node is created, false otherwise */
 bool BST::insert(Comparable *comp)
