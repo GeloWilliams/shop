@@ -55,7 +55,7 @@ using namespace std;
    @return: true if *this is less than rhs, false otherwise */
 bool Comic::operator<(const Comparable &rhs) const
 {
-   // Cast as Comic to override Product operator<:
+   // Cast as Comic to override Comparable operator<:
    const Comic &c = static_cast<const Comic &>(rhs);
 
    // sorted by publisher, title, year, grade
@@ -85,7 +85,7 @@ bool Comic::operator<(const Comparable &rhs) const
    @return:    true if *this is equal to rhs, false otherwise */
 bool Comic::operator==(const Comparable &rhs) const
 {
-   // Cast as Comic to override Product operator==:
+   // Cast as Comic to override Comparable operator==:
    const Comic &c = static_cast<const Comic &>(rhs);
 
    if (publisher_ == c.publisher_ && title_ == c.title_ 

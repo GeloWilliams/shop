@@ -1,4 +1,4 @@
-/** @file Hasher.cpp
+/** @file ProductFactory.cpp
    Angelo Williams | Student No. 2101031
    2022.02
    Program 4 : Object Oriented Design Shop
@@ -44,73 +44,33 @@
    If all entries are incorrectly formatted, an error message will be printed to the user. */
 
 #include <iostream>
-#include <vector>
 #include "ProductFactory.h"
-
-
 using namespace std;
 
 /**  -----------------------------------------------------------------
    Constructor 
    @pre:  none.
-   @post: a new Hasher object has been instantiated.  */
+   @post: a new ProductFactory object has been instantiated.  */
 ProductFactory::ProductFactory()
 {
    for (int i = 0; i < BUCKETS_; i++) {
-
-   } // end for 
+      BST bt;
+      hashTable_[i] = bt;
+   }
 } // end Constructor
 
 /**  -----------------------------------------------------------------
-   hashFunction
-   -- Generates an index integer for the caller
-   @pre:       none
-   @post:      An array index in hashTable_ is returned to the caller
-   @param key: a char denoting the type of Product* the index slot is being reserved for.
-   @return:    an integer for the slot in which Product* should be inserted into hashTable_. */
-int ProductFactory::hashFunction(char key)
-{
-   // Product:
-   if (key == 'P') {
-      return 0;
-   } else if (key == 'M') {
-      return 3;
-   } else if (key == 'C') {
-      return 7;
-   } else if (key == 'S') {
-      return 10;
-   }
-
-   return -1;
-} // end hashFunction
-
-
-/**  -----------------------------------------------------------------
-   insertItem
-   -- Calls hashFunction and uses returned index to store a Product* object in hashTable_.
-   @pre:        hashTable_ contains at least one non-conflicting slot
-   @post:       a new HashNode object is stored in hashTable_
-   @param key:  returned index from hashFunction
-   @param item: a Product* object
-   @return:     true if insertion is succesful, false otherwise. */
-void ProductFactory::insertItem(char key, Comparable *&item)
-{
-   int hashValue = hashFunction(key);
-   hashTable_[hashValue].insert(item);
-} // end insertItem
-
-
-/**  -----------------------------------------------------------------
    create
-   -- Calls hashFunction and uses returned index to store a Product* object in hashTable_.
-   -- Used for callers to create a dynamically allocated Hasahble
+   -- Calls hashFunction and uses the returned index
+   -- Calls insertItem to store a Product* object in hashTable_
+   -- Used for callers to create a dynamically allocated Comparable
    @pre:               hashTable_ contains at least one non-conflicting slot
    @post:              a new HashNode object is stored in hashTable_
-   @param key:         the correlating key for a specific Product
    @param description: the full description of the Product
    @return:            a new Product* with attributes written */
-Comparable* ProductFactory::create(char key, string description)
+Comparable* ProductFactory::create(string description)
 {
+   char key = description[0];
    if (key == 'P') {
       Product p;
       Comparable* pp = p.build(description);
@@ -134,6 +94,128 @@ Comparable* ProductFactory::create(char key, string description)
    }
    return nullptr;
 } // end create
+
+
+/**  -----------------------------------------------------------------
+   hashFunction
+   -- Generates an index integer for the caller
+   @pre:       none
+   @post:      An array index in hashTable_ is returned to the caller
+   @param key: a char denoting the type of Product* the index slot is being reserved for.
+   @return:    an integer for the slot in which Product* should be inserted into hashTable_. */
+int ProductFactory::hashFunction(char key)
+{
+   // Product:
+   if (key == 'P') {
+      return 0;
+   } else if (key == 'M') {
+      return 3;
+   } else if (key == 'C') {
+      return 7;
+   } else if (key == 'S') {
+      return 10;
+   }
+   return -1;
+} // end hashFunction
+
+/**  -----------------------------------------------------------------
+   insertItem
+   -- Calls hashFunction and uses returned index to store a Product* object in hashTable_.
+   @pre:        hashTable_ contains at least one non-conflicting slot
+   @post:       a new HashNode object is stored in hashTable_
+   @param key:  returned index from hashFunction
+   @param item: a Product* object
+   @return:     true if insertion is succesful, false otherwise. */
+void ProductFactory::insertItem(char key, Comparable *&item)
+{
+   int hashValue = hashFunction(key);
+   hashTable_[hashValue].insert(item);
+} // end insertItem
+
+/**  -----------------------------------------------------------------
+   remove
+   -- Calls hashFunction and uses the returned index
+   -- Calls deleteItem to remove a Product* object in hashTable_
+   @pre:               hashTable_ contains at least one non-conflicting slot
+   @post:              a Comparable is removed from hashTable_
+   @param description: the full description of the Product
+   @return:            a new Product* with attributes written */
+Comparable* ProductFactory::remove(string description)
+{
+   char key = description[0];
+   if (key == 'P') {
+      Product p;
+      Comparable* pp = p.build(description);
+      removeItem(key, pp);
+      return pp;
+   } else if (key == 'M') {
+      Coin m;
+      Comparable* mp = m.build(description);
+      removeItem(key, mp);
+      return mp;
+   } else if (key == 'C') {
+      Comic c;
+      Comparable* cp = c.build(description);
+      removeItem(key, cp);
+      return cp;
+   } else if (key == 'S') {
+      SportsCard s;
+      Comparable* sp = s.build(description);
+      removeItem(key, sp);
+      return sp;
+   }
+   return nullptr;   
+} // remove
+
+
+/**  -----------------------------------------------------------------
+   removeItem
+   -- Calls hashFunction and uses returned index to remove a Product* object in hashTable_.
+   @pre:        none
+   @post:       item is removed from hashTable_
+   @param key:  returned index from hashFunction
+   @param item: the Product* object to remove
+   @return:     the Product* that was removed */
+Comparable* ProductFactory::removeItem(char key, Comparable *&item)
+{
+   int hashValue = hashFunction(key);
+   Comparable* toReturn = get(item->getItem());
+   hashTable_[hashValue].remove(*item);
+   return toReturn;
+} // end removeItem
+
+/**  -----------------------------------------------------------------
+   get
+   -- Retrieves a Product* 
+   @pre:               none
+   @post:              a Product* is returned to the caller
+   @param key:         the correlating key for a specific Product
+   @param description: the full description of the Product
+   @return:            a Product* matching the description given */
+Comparable* ProductFactory::get(string description)
+{
+   char key = description[0];
+   int hashValue = hashFunction(key);
+
+   if (key == 'P') {
+      Product p;
+      Comparable* pp = p.build(description);
+      return hashTable_[hashValue].retrieve(*pp);
+   } else if (key == 'M') {
+      Coin m;
+      Comparable* mp = m.build(description);
+      return hashTable_[hashValue].retrieve(*mp);
+   } else if (key == 'C') {
+      Comic c;
+      Comparable* cp = c.build(description);
+      return hashTable_[hashValue].retrieve(*cp);
+   } else if (key == 'S') {
+      SportsCard s;
+      Comparable* sp = s.build(description);
+      return hashTable_[hashValue].retrieve(*sp);
+   }
+   return nullptr;
+} // end get
 
 
 /** TEST */

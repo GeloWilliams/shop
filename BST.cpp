@@ -442,7 +442,9 @@ void BST::printInorder(std::ostream& out, Node* node) const
 {
    if (node != nullptr) {
       printInorder(out, node->leftChild);
-      out  << node->item->getItem() << std::endl;
+      // check if empty
+      if (!node->item->isEmpty())
+         out  << node->item->getItem() << std::endl;
       printInorder(out, node->rightChild);
    } // end if
 } // end printInorder

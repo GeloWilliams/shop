@@ -55,7 +55,7 @@ using namespace std;
    @return: true if *this is less than rhs, false otherwise */
 bool Coin::operator<(const Comparable &rhs) const
 {
-   // Cast as Coin to override Product operator<:
+   // Cast as Coin to override Comparable operator<:
    const Coin &m = static_cast<const Coin &>(rhs);
 
    // sorted by type, year, grade
@@ -81,7 +81,7 @@ bool Coin::operator<(const Comparable &rhs) const
    @return:    true if *this is equal to rhs, false otherwise */
 bool Coin::operator==(const Comparable &rhs) const
 {
-   // Cast as Coin to override Product operator==:
+   // Cast as Coin to override Comparable operator==:
    const Coin &m = static_cast<const Coin &>(rhs);
 
    if (type_ == m.type_ && year_ == m.year_ && grade_ == m.grade_)

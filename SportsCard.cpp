@@ -55,7 +55,7 @@ using namespace std;
    @return: true if *this is less than rhs, false otherwise */
 bool SportsCard::operator<(const Comparable &rhs) const
 {
-   // Cast as SportsCard to override Product operator<:
+   // Cast as SportsCard to override Comparable operator<:
    const SportsCard &s = static_cast<const SportsCard &>(rhs);
 
    // sorted by player, year, manufacturer, grade
@@ -85,7 +85,7 @@ bool SportsCard::operator<(const Comparable &rhs) const
    @return:    true if *this is equal to rhs, false otherwise */
 bool SportsCard::operator==(const Comparable &rhs) const
 {
-   // Cast as SportsCard to override Product operator==:
+   // Cast as SportsCard to override Comparable operator==:
    const SportsCard &s = static_cast<const SportsCard &>(rhs);
 
    if (player_ == s.player_ && year_ == s.year_ 

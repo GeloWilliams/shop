@@ -142,3 +142,37 @@ string Product::getItem() const
    return toReturn;
 } // end getItem
 
+
+/**  -----------------------------------------------------------------
+   isEmpty
+   -- returns quantity_
+   @pre:    none
+   @post:   none
+   @return: true if quantity_ is empty, false otherwise */
+bool Product::isEmpty() {
+   if (quantity_ == 0) {
+      return true;
+   } else {
+      return false;
+   } // end if
+} // end isEmpty
+
+/**  -----------------------------------------------------------------
+   reduce
+   -- decreases the quantity of a Comparable by 1 if quantity >= 1
+   @pre:    quantity_ in *this must contain an initialized value
+   @post:   quantity_ has been decreased by 1 if >= 1 */
+void Product::reduce() {
+   if (quantity_ >= 1) {
+      quantity_--;
+   } // end if
+} // end reduce
+
+/**  -----------------------------------------------------------------
+   increase
+   -- increases the quantity of a Comparable by 1
+   @pre:    quantity_ in *this must contain an initialized value
+   @post:   quantity_ has been increase by 1 */
+void Product::increase() {
+   quantity_++;
+} // end increase

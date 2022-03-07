@@ -1,4 +1,4 @@
-/** @file Product.h
+/** @file Customer.h
    Angelo Williams | Student No. 2101031
    2022.02
    Program 4 : Object Oriented Design Shop
@@ -45,29 +45,30 @@
 
 #pragma once
 #include <iostream>
+#include <vector>
 #include "Comparable.h"
 
 using namespace std;
 
-class Product : public Comparable {
+class Customer : public Comparable {
    public:
       /**  -----------------------------------------------------------------
          Constructor 
          @pre:  none.
-         @post: a new Product object has been instantiated. */
-      Product() : name_(""), year_(-1) {}
+         @post: a new Customer object has been instantiated. */
+      Customer() : firstName_(""), lastName_(""), id_(000) {}
 
       /**  -----------------------------------------------------------------
          Destructor
          @pre:  the Constructor has been called.
          @post: all data that was dynamically allocated has been removed and deallocated. */
-      virtual ~Product() {}
+      virtual ~Customer() {}
 
       /**  -----------------------------------------------------------------
          Less Than Operator 
          @pre:       none.
          @post:      returns true if *this is less than rhs
-         @param rhs: Product on the righthand side of the equation 
+         @param rhs: Customer on the righthand side of the equation 
          @return:    true if *this is less than rhs, false otherwise */
       virtual bool operator<(const Comparable &rhs) const;
 
@@ -75,56 +76,70 @@ class Product : public Comparable {
          Equal To Operator 
          @pre:       none.
          @post:      returns true if *this is equal to rhs
-         @param rhs: Product on the righthand side of the equation 
+         @param rhs: Customer on the righthand side of the equation 
          @return:    true if *this is equal to rhs, false otherwise */
       virtual bool operator==(const Comparable &rhs) const;
 
       /**  -----------------------------------------------------------------
          build
-         -- Creates a new Product*
-         -- Receives a description for the Product that is parsed for attributes
+         -- Creates a new Customer*
+         -- Receives a description for the Customer that is parsed for attributes
          @pre:    *this has been instantiated
-         @post:   a new Product* with attributes written is returned to the caller
-         @return: a new dynamically allocated Product* */ 
-      virtual Product* build(string description);
+         @post:   a new Customer* with attributes written is returned to the caller
+         @return: a new dynamically allocated Customer* */ 
+      virtual Customer* build(string description);
 
       /**  -----------------------------------------------------------------
          getItem
-         -- a string containing the Product description is returned. Each detail is separated by a 
-            comma allowing the entire Product description to be presented on one line
+         -- a string containing the Customer description is returned. Each detail is separated by a 
+            comma allowing the entire Customer description to be presented on one line
          @pre:    each data member in *this must contain an initialized value
          @post:   a string containing the values for each data member is returned to the caller 
-         @return: a full Product description in string format */
+         @return: a full Customer description in string format */
       virtual string getItem() const;
 
       /**  -----------------------------------------------------------------
-         isEmpty
-         -- returns quantity_
-         @pre:    none
-         @post:   none
-         @return: true if quantity_ is empty, false otherwise */
-      virtual bool isEmpty();
+         addS
+         -- adds a Product to transactions_, marking 'S' for a Store Sale during
+            a Customer buy
+         @pre:           none
+         @post:          a string with the transaction type, Customer id, and
+                         product description has been added to transactions_
+         @param product: the Product included within the transaction */
+      virtual void addS(Comparable* product);
 
       /**  -----------------------------------------------------------------
-         reduce
-         -- decreases the quantity of a Comparable by 1 if quantity >= 1
-         @pre:    quantity_ in *this must contain an initialized value
-         @post:   quantity_ has been decreased by 1 if >= 1 */
-      virtual void reduce();
+         addB
+         -- adds a Product to transactions_, marking 'B' for a Store Buy during
+            a Customer sale
+         @pre:           none
+         @post:          a string with the transaction type, Customer id, and
+                         product description has been added to transactions_
+         @param product: the Product included within the transaction */
+      virtual void addB(Comparable* product);
 
       /**  -----------------------------------------------------------------
-         increase
-         -- increases the quantity of a Comparable by 1
-         @pre:    quantity_ in *this must contain an initialized value
-         @post:   quantity_ has been increase by 1 */
-      virtual void increase();
+         Output Stream operator
+         -- Prints all transactions for this Customer
+         -- calls printTree
+         @pre:        none
+         @post:       a list of transactions is sent to the Output Stream operator
+         @param out:  the output stream operator
+         @param cstm: *this  */
+      friend ostream& operator<<(ostream &out, const Customer& cstm);
 
    protected:
-      /** The name of *this product */
-      string name_;
+      /** The first name of *this Customer */
+      string firstName_;
+
+      /** The last name of *this Customer */
+      string lastName_;
       
-      /** The year in which *this was released */
-      int year_;   
+      /** The unique three-digit Customer ID */
+      int id_;   
+
+      /** vector containing all Customer transactions  */
+      vector<string> transactions_;
       
 };
 

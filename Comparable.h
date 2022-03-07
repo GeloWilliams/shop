@@ -54,7 +54,7 @@ class Comparable {
          Constructor 
          @pre:  none.
          @post: a new Comparable object has been instantiated. */
-      Comparable() : key_(' ') {}
+      Comparable() : key_(' '), quantity_(1) {}
 
       /**  -----------------------------------------------------------------
          Destructor
@@ -96,7 +96,33 @@ class Comparable {
          @return: a full Comparable description in string format */
       virtual string getItem() const { return ""; }
 
+      /**  -----------------------------------------------------------------
+         isEmpty
+         -- returns quantity_
+         @pre:    none
+         @post:   none
+         @return: true if quantity_ is empty, false otherwise */
+      virtual bool isEmpty() {return false;}
+
+      /**  -----------------------------------------------------------------
+         reduce
+         -- decreases the quantity of a Comparable by 1 if quantity >= 1
+         @pre:    quantity_ in *this must contain an initialized value
+         @post:   quantity_ has been decreased by 1 if >= 1 */
+      virtual void reduce(){}
+
+      /**  -----------------------------------------------------------------
+         increase
+         -- increases the quantity of a Comparable by 1
+         @pre:    quantity_ in *this must contain an initialized value
+         @post:   quantity_ has been increase by 1 */
+      virtual void increase(){}
+
+
    protected:
       /** The Comparable key */
       char key_;
+
+      /** The quantity of *this Comparable */
+      int quantity_;
 };
