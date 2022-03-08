@@ -90,6 +90,16 @@ class CustomerHouse {
       Customer* get(int id);
 
       /**  -----------------------------------------------------------------
+         getTransactions
+         -- Prints all transactions for an individual Customer
+         @pre:      none
+         @post:     a list of Customer transactions is sent to the caller in
+                    string format
+         @param id: the Customer's unique id
+         @return:   a list of transactions for a single Customer in string format */
+      virtual string getTransactions(int id);
+
+      /**  -----------------------------------------------------------------
          buy
          -- Adds a Product to or increases quantity of Product in 
             Customer object's purchases_ vector
@@ -113,8 +123,15 @@ class CustomerHouse {
          @param product: the Product in the transaction */
       void cSell(int id, Comparable* product);
 
-      /* TEST */
-      void print();
+      /**  -----------------------------------------------------------------
+         Output Stream operator
+         -- Prints all transactions for all Customers
+         @pre:       none
+         @post:      a list of Customer transactions is sent to the 
+                     Output Stream operator
+         @param out: the output stream operator
+         @param ch:  *this  */
+      friend ostream& operator<<(ostream &out, CustomerHouse& ch);
 
    private:
        /**  -----------------------------------------------------------------

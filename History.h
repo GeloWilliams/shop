@@ -1,4 +1,4 @@
-/** @file Buy.h
+/** @file History.h
    Angelo Williams | Student No. 2101031
    2022.02
    Program 4 : Object Oriented Design Shop
@@ -45,46 +45,25 @@
 
 #pragma once
 #include <iostream>
-#include <vector>
 #include "Transaction.h"
 
 using namespace std;
 
-class ProductFactory;
 class CustomerHouse;
 
-class Buy : public Transaction {
+class History : public Transaction {
    public:
       /**  -----------------------------------------------------------------
-         buy
-         -- a string containing the Transaction description is read and parsed. The details
-            of the transaction will generate an interaction between ProductFactory and 
-            CustomerHouse
-         -- a Product is sold by a Customer and bought by Store
-         @pre:                  ProductFactory and CustomerHouse are instantiated, 
-                                containing at least one Product and one Customer respectively
-         @post:                 ProductFactory increments the quantity of Product by 1, 
-                                CustomerHouse adds a transaction to a Customer object's 
-                                transactions_ vector 
-         @param subDescription: substring of transaction descripton without key
-         @param pf              a ProductFactory object
-         @param ch              a CustomerHouse object  */
-      virtual void buy(string subDescription, ProductFactory &pf, CustomerHouse &ch)
+         history
+         -- Commands CustomerHouse to print all transactions by every Customer,
+            listed in alphabetical order by first name
+         @pre:      none
+         @post:     transactions all Customer objects are sent to the output stream operator
+         @param ch: a CustomerHouse object   */
+      virtual void history(CustomerHouse &ch) const 
       {
-         string delimiter = ", ";
-         
-         // parse Customer id
-         string cs = subDescription.substr(0, subDescription.find(delimiter));
-         int cId = stoi(cs);
-         // erase substring
-         subDescription.erase(0, (subDescription.find(delimiter) + delimiter.length()));
-
-         // increase quantity
-         Comparable* c = pf.get(subDescription);
-         c->increase();
-
-         // customer sell
-         ch.cSell(cId, c);
-         
-      } // end buy
+         cout << "History" << endl;
+         cout << endl;
+         cout << ch << endl;
+      } // end history
 };

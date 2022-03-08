@@ -44,20 +44,10 @@
    If all entries are incorrectly formatted, an error message will be printed to the user. */
 
 #include <iostream>
+#include <iomanip>
 #include "ProductFactory.h"
 using namespace std;
 
-/**  -----------------------------------------------------------------
-   Constructor 
-   @pre:  none.
-   @post: a new ProductFactory object has been instantiated.  */
-ProductFactory::ProductFactory()
-{
-   for (int i = 0; i < BUCKETS_; i++) {
-      BST bt;
-      hashTable_[i] = bt;
-   }
-} // end Constructor
 
 /**  -----------------------------------------------------------------
    create
@@ -105,7 +95,6 @@ Comparable* ProductFactory::create(string description)
    @return:    an integer for the slot in which Product* should be inserted into hashTable_. */
 int ProductFactory::hashFunction(char key)
 {
-   // Product:
    if (key == 'P') {
       return 0;
    } else if (key == 'M') {
@@ -217,11 +206,17 @@ Comparable* ProductFactory::get(string description)
    return nullptr;
 } // end get
 
-
-/** TEST */
-void ProductFactory::print()
+/**  -----------------------------------------------------------------
+   Output Stream operator
+   -- Prints all Products with a quantity of at least 1
+   @pre:       none
+   @post:      a list of Products is sent to the Output Stream operator
+   @param out: the output stream operator
+   @param pf: *this  */
+ostream& operator<<(ostream &out, ProductFactory& pf)
 {
    for (int i = 0; i < BUCKETS_; i++) {
-         cout << hashTable_[i] << endl;
-   }
-}
+      out << pf.hashTable_[i];
+   } // end for
+   return out;
+} // end output stream operator

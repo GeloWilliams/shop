@@ -127,15 +127,39 @@ Customer* Customer::build(string description)
 
 } // end build
 
-
 /**  -----------------------------------------------------------------
    getItem
+   -- Prints all transactions for an individual Customer
+   @pre:    none
+   @post:   a list of Customer transactions is sent to the caller in
+            string format
+   @return: a list of transactions for a single Customer in string format */
+string Customer::getItem() const
+{
+   string n = "\n";
+   string s = firstName_;
+   if (lastName_ != "") {
+      s += + " " + lastName_ + n;
+   } else {
+      s += n;
+   } // end if
+
+   for (int i = 0; i < transactions_.size(); i++) {
+      s += "     " + transactions_[i] + n;
+   } // end getItem
+   if (transactions_.size() == 0) 
+      s = "";
+   return s;
+} // end getTransactions
+
+/**  -----------------------------------------------------------------
+   getInfo
    -- a string containing the Customer description is returned. Each detail is separated by a 
       comma allowing the entire Customer description to be presented on one line
    @pre:    each data member in *this must contain an initialized value
    @post:   a string containing the values for each data member is returned to the caller 
    @return: a full Customer description in string format */
-string Customer::getItem() const
+string Customer::getInfo() const
 {
    string toReturn = to_string(id_) + ", " + firstName_ + " " + lastName_;
    return toReturn;
@@ -147,7 +171,7 @@ string Customer::getItem() const
       a Customer buy
    @pre:           none
    @post:          a string with the transaction type, Customer id, and
-                     product description has been added to transactions_
+                   product description has been added to transactions_
    @param product: the Product included within the transaction */
 void Customer::addS(Comparable* product)
 {
@@ -156,12 +180,14 @@ void Customer::addS(Comparable* product)
    // parse product information
    string delimiter = ", ";
    string prodString = product->getItem();
+   //parse key
+   string ke = prodString.substr(0, prodString.find(delimiter));
    // erase key substring
    prodString.erase(0, (prodString.find(delimiter) + delimiter.length()));
    // erase quantity substring
    prodString.erase(0, (prodString.find(delimiter) + delimiter.length()));
 
-   storeSale += prodString;
+   storeSale += ke + ", " + prodString;
    transactions_.push_back(storeSale);
 } // end addP
 
@@ -171,7 +197,7 @@ void Customer::addS(Comparable* product)
       a Customer sale
    @pre:           none
    @post:          a string with the transaction type, Customer id, and
-                     product description has been added to transactions_
+                   product description has been added to transactions_
    @param product: the Product included within the transaction */
 void Customer::addB(Comparable* product)
 {
@@ -180,27 +206,13 @@ void Customer::addB(Comparable* product)
    // parse product information
    string delimiter = ", ";
    string prodString = product->getItem();
+   //parse key
+   string ke = prodString.substr(0, prodString.find(delimiter));
    // erase key substring
    prodString.erase(0, (prodString.find(delimiter) + delimiter.length()));
    // erase quantity substring
    prodString.erase(0, (prodString.find(delimiter) + delimiter.length()));
 
-   storeBuy += prodString;
+   storeBuy += ke + ", " + prodString;
    transactions_.push_back(storeBuy);
 } // end addS
-
-
-/**  -----------------------------------------------------------------
-   Output Stream operator
-   -- Prints all transactions for this Customer line by line
-   @pre:        none
-   @post:       a list of transactions is sent to the Output Stream operator
-   @param out:  the output stream operator
-   @param cstm: *this  */
-ostream& operator<<(ostream &out, const Customer& cstm)
-{
-   for (int i = 0; i < cstm.transactions_.size(); i++) {
-      out <<  cstm.transactions_[i] << endl;
-   } // end for
-   return out;
-} // end output stream operator

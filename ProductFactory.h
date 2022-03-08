@@ -63,7 +63,7 @@ class ProductFactory {
          Constructor 
          @pre:  none.
          @post: a new ProductFactory object has been instantiated.  */
-      ProductFactory();
+      ProductFactory(){}
 
       /**  -----------------------------------------------------------------
          create
@@ -96,9 +96,14 @@ class ProductFactory {
          @return:            a Product* matching the description given */
       Comparable* get(string description);
 
-
-      /* TEST */
-      void print();
+      /**  -----------------------------------------------------------------
+         Output Stream operator
+         -- Prints all Products with a quantity of at least 1
+         @pre:       none
+         @post:      a list of Products is sent to the Output Stream operator
+         @param out: the output stream operator
+         @param pf: *this  */
+      friend ostream& operator<<(ostream &out, ProductFactory& pf);
 
    private:
        /**  -----------------------------------------------------------------

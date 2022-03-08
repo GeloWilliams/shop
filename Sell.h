@@ -1,4 +1,4 @@
-/** @file Buy.h
+/** @file Sell.h
    Angelo Williams | Student No. 2101031
    2022.02
    Program 4 : Object Oriented Design Shop
@@ -8,7 +8,7 @@
       
       sell : removes an item from the store inventory
 
-      buy : adds an item to the store inventory
+      sell : adds an item to the store inventory
 
       display : outputs the entire inventory, including the number of each item
 
@@ -53,23 +53,23 @@ using namespace std;
 class ProductFactory;
 class CustomerHouse;
 
-class Buy : public Transaction {
+class Sell : public Transaction {
    public:
       /**  -----------------------------------------------------------------
-         buy
+         sell
          -- a string containing the Transaction description is read and parsed. The details
             of the transaction will generate an interaction between ProductFactory and 
             CustomerHouse
-         -- a Product is sold by a Customer and bought by Store
+         -- a Product is bought by a Customer and sold by Store
          @pre:                  ProductFactory and CustomerHouse are instantiated, 
                                 containing at least one Product and one Customer respectively
-         @post:                 ProductFactory increments the quantity of Product by 1, 
+         @post:                 ProductFactory decrements the quantity of Product by 1, 
                                 CustomerHouse adds a transaction to a Customer object's 
                                 transactions_ vector 
          @param subDescription: substring of transaction descripton without key
          @param pf              a ProductFactory object
          @param ch              a CustomerHouse object  */
-      virtual void buy(string subDescription, ProductFactory &pf, CustomerHouse &ch)
+      virtual void sell(string subDescription, ProductFactory &pf, CustomerHouse &ch)
       {
          string delimiter = ", ";
          
@@ -79,12 +79,12 @@ class Buy : public Transaction {
          // erase substring
          subDescription.erase(0, (subDescription.find(delimiter) + delimiter.length()));
 
-         // increase quantity
+         // reduce quantity
          Comparable* c = pf.get(subDescription);
-         c->increase();
+         c->reduce();
 
-         // customer sell
-         ch.cSell(cId, c);
+         // customer buy
+         ch.cBuy(cId, c);
          
-      } // end buy
+      } // end sell
 };

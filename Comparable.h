@@ -118,7 +118,6 @@ class Comparable {
          @post:   quantity_ has been increase by 1 */
       virtual void increase(){}
 
-
    protected:
       /** The Comparable key */
       char key_;

@@ -1,4 +1,4 @@
-/** @file Buy.h
+/** @file Display.h
    Angelo Williams | Student No. 2101031
    2022.02
    Program 4 : Object Oriented Design Shop
@@ -45,46 +45,27 @@
 
 #pragma once
 #include <iostream>
-#include <vector>
+#include <iomanip>
 #include "Transaction.h"
 
 using namespace std;
 
 class ProductFactory;
-class CustomerHouse;
 
-class Buy : public Transaction {
+class Display : public Transaction {
    public:
       /**  -----------------------------------------------------------------
-         buy
-         -- a string containing the Transaction description is read and parsed. The details
-            of the transaction will generate an interaction between ProductFactory and 
-            CustomerHouse
-         -- a Product is sold by a Customer and bought by Store
-         @pre:                  ProductFactory and CustomerHouse are instantiated, 
-                                containing at least one Product and one Customer respectively
-         @post:                 ProductFactory increments the quantity of Product by 1, 
-                                CustomerHouse adds a transaction to a Customer object's 
-                                transactions_ vector 
-         @param subDescription: substring of transaction descripton without key
-         @param pf              a ProductFactory object
-         @param ch              a CustomerHouse object  */
-      virtual void buy(string subDescription, ProductFactory &pf, CustomerHouse &ch)
+         display
+         -- Commands ProductFactory to print the contents of its inventory, 
+         skipping any items with a quantity of 0
+         @pre:      none
+         @post:     the contents of the ProductFactory inventory is sent to the output
+                    stream operator, accounting for any transactional changes
+         @param pf: a ProductFactory object */
+      virtual void display(ProductFactory &pf)
       {
-         string delimiter = ", ";
-         
-         // parse Customer id
-         string cs = subDescription.substr(0, subDescription.find(delimiter));
-         int cId = stoi(cs);
-         // erase substring
-         subDescription.erase(0, (subDescription.find(delimiter) + delimiter.length()));
-
-         // increase quantity
-         Comparable* c = pf.get(subDescription);
-         c->increase();
-
-         // customer sell
-         ch.cSell(cId, c);
-         
-      } // end buy
+         cout << "Inventory" << endl;
+         cout << endl;
+         cout << pf << endl;
+      } // end display
 };

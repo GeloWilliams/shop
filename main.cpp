@@ -1,6 +1,6 @@
 
 /**
-g++ -g -std=c++11 -o main main.cpp ProductFactory.cpp Product.cpp Coin.cpp Comic.cpp SportsCard.cpp CustomerHouse.cpp Customer.cpp BST.cpp
+g++ -g -std=c++11 -o main main.cpp ProductFactory.cpp Product.cpp Coin.cpp Comic.cpp SportsCard.cpp CustomerHouse.cpp Customer.cpp BST.cpp ActionStation.cpp
    cd Desktop/Main/Study/CSS502/Programs/Program4
 */  
 
@@ -9,6 +9,7 @@ g++ -g -std=c++11 -o main main.cpp ProductFactory.cpp Product.cpp Coin.cpp Comic
 #include <vector>
 #include "ProductFactory.h"
 #include "CustomerHouse.h"
+#include "ActionStation.h"
 
 using namespace std;
 
@@ -28,6 +29,14 @@ using namespace std;
    // ProductFactory pf;
    // Product* h = pf.create('P',"testing");
    // cout << h->getItem() << endl;
+
+   // cout << left;
+	// cout << 
+	// setw(25) << "Description" << 
+	// setw(10) << "From" <<
+	// setw(10) << "To" <<
+	// setw(10) << "Dist" <<
+	// setw(10) << "Path" << endl;
 
 
 void test1()
@@ -74,8 +83,6 @@ void test3()
    Comparable* t = pf.create("C, 10, 1979, Good, Garfield, TheBest Place");
    Comparable* w = pf.create("S, 9, 2002, Near Mint, Ryu the Great, Upper Deck");
    Comparable* s = pf.create("S, 4, 2003, Very Good, Ken the Master, Topps"); 
-
-   pf.print();
 
    Comparable* x = pf.create("P, 1, 2020, messing");
 
@@ -164,8 +171,6 @@ void test3()
 
 
 
-
-   pf.print();
    
 
 
@@ -334,19 +339,19 @@ void test7()
    cout << "retrieved: " << p->getItem() << endl;
    cout << endl;
 
-   ch.print();
+   cout << ch << endl;
    
    cout << endl;
    cout << "deleted: Ryan" << endl;
    cout << endl;
    ch.remove(179);
 
-   ch.print();
+   cout << ch << endl;
    cout << "delete: Philip Kim " << endl;
    ch.remove(88);
    cout << endl;
    
-   ch.print();
+   cout << ch << endl;
 
 }
 
@@ -373,21 +378,79 @@ void test8()
    ch.create("179, Ryan");
    ch.create("15, Sara");
    ch.create("88, Philip Kim");
+   
+   Comparable* xy = ch.get(88);
 
-   ch.cBuy(15,h);
-   ch.cBuy(15,d);
-   ch.cBuy(15,t);
-   ch.cSell(15,c);
-   ch.cSell(88,m);
+   // ch.cBuy(15,h);
+   // ch.cBuy(15,d);
+   // ch.cBuy(15,t);
+   // ch.cSell(15,c);
+   // ch.cSell(88,m);
 
-   cout << "Sara's transactions:" << endl;
-   cout << endl;
-   cout << *ch.get(15) << endl;
+   // cout << "Sara's transactions:" << endl;
+   // cout << endl;
+   // cout << ch.get(15)->getItem() << endl;
+   // cout << endl;
 
-
+   // cout << "All : " << endl;
+   cout << ch << endl;
 
 }
 
+
+void test9()
+{
+   CustomerHouse ch;
+   ProductFactory pf;
+   ActionStation ac;
+   
+
+
+   // create products
+   Comparable* h = pf.create("P, 3, 1998, testing");
+   Comparable* o = pf.create("P, 1, 2020, messing");
+   Comparable* q = pf.create("P, 6, 1963, dressing");
+   Comparable* r = pf.create("P, 10, 2076, feasting");
+   Comparable* v = pf.create("P, 2, 1999, cresting");
+   Comparable* c = pf.create("M, 7, 2001, 65, Lincoln Cent");
+   Comparable* d = pf.create("M, 6, 2015, 70, Abraham Nickel");
+   Comparable* m = pf.create("C, 1, 2000, Excellent, Lord of the Rings, Tolken");
+   Comparable* n = pf.create("C, 8, 1992, Decent, Sonic the Hedgehog, BestCorp");
+   Comparable* t = pf.create("C, 10, 1979, Good, Garfield, The Best Place");
+   Comparable* w = pf.create("S, 9, 2002, Near Mint, Ryu the Great, Upper Deck");
+   Comparable* s = pf.create("S, 4, 2003, Very Good, Ken the Master, Topps"); 
+
+   cout << "Current Inventory" << endl;
+   ac.transact("D", pf, ch);
+
+   // get customers
+   ch.create("179, Ryan");
+   ch.create("015, Sara");
+   ch.create("088, Philip Kim");
+
+   cout << endl;
+
+   // transactions
+   string first = "B, 015, M, 6, 2015, 70, Abraham Nickel";
+   string second = "S, 088, C, 8, 1992, Decent, Sonic the Hedgehog, BestCorp";
+   string third = "S, 088, C, 1, 2000, Excellent, Lord of the Rings, Tolken";
+   string fourth = "B, 088, S, 4, 2003, Very Good, Ken the Master, Topps"; // need to validate product type
+ 
+
+   ac.transact(first, pf, ch);
+   ac.transact(second, pf, ch);
+   ac.transact(third, pf, ch);
+   ac.transact(fourth, pf, ch);
+
+   // ac.transact("C, 015", pf, ch); // need to validate customer id
+   ac.transact("H", pf, ch);
+   
+   cout << endl;
+   cout << "After transactions: " << endl;
+   ac.transact("D", pf, ch);
+
+   
+}
 
 int main()
 {
@@ -395,10 +458,11 @@ int main()
    // test2();
    // test3();
    // test4();
-   test5();
+   // test5();
    // test6();
-   test7();
-   test8();
+   // test7(); 
+   // test8();
+   test9();
 
 
    return 0;

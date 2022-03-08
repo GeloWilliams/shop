@@ -147,7 +147,7 @@ Customer* CustomerHouse::get(int id)
    for (int i = 0; i < CLIST_; i++) {
       int hashValue = hashFunction(id, i);
       if (quickLookup_[hashValue] != nullptr) {
-         string s = quickLookup_[hashValue]->getItem();
+         string s = quickLookup_[hashValue]->getInfo();
          string i = s.substr(0, s.find(", "));
          int idInt = stoi(i);
          if (idInt == id) {
@@ -156,6 +156,23 @@ Customer* CustomerHouse::get(int id)
       } // end if
    } // end for
    return nullptr;
+} // end get
+
+
+/**  -----------------------------------------------------------------
+   getTransactions
+   -- Prints all transactions for an individual Customer
+   @pre:      none
+   @post:     a list of Customer transactions is sent to the caller in
+               string format
+   @param id: the Customer's unique id
+   @return:   a list of transactions for a single Customer in string format */
+string CustomerHouse::getTransactions(int id)
+{
+   string s = "";
+   Customer* c = get(id);
+   s = c->getItem();
+   return s;
 } // end get
 
 
@@ -191,9 +208,16 @@ void CustomerHouse::cSell(int id, Comparable* product)
    c->addB(product);
 } // end cSell
 
-
-/** TEST */
-void CustomerHouse::print()
+/**  -----------------------------------------------------------------
+   Output Stream operator
+   -- Prints all transactions for all Customers
+   @pre:       none
+   @post:      a list of Customer transactions is sent to the 
+               Output Stream operator
+   @param out: the output stream operator
+   @param ch:  *this  */
+ostream& operator<<(ostream &out, CustomerHouse& ch)
 {
-   cout << sortedList_ << endl;
-}
+   cout << ch.sortedList_ << endl;
+   return out;
+} // end output stream operator

@@ -44,7 +44,6 @@
    If all entries are incorrectly formatted, an error message will be printed to the user. */
 
 #include <iostream>
-#include <vector>
 #include "BST.h"
 
 using namespace std;
@@ -423,8 +422,6 @@ std::ostream& operator<<(std::ostream &out, BST& BT)
 {
    if (BT.rootPtr != nullptr) {
       BT.printInorder(out, BT.rootPtr);
-   } else {
-      out << "Tree is empty." << endl;
    }
    return out;
 }
@@ -442,9 +439,8 @@ void BST::printInorder(std::ostream& out, Node* node) const
 {
    if (node != nullptr) {
       printInorder(out, node->leftChild);
-      // check if empty
       if (!node->item->isEmpty())
-         out  << node->item->getItem() << std::endl;
+         out << node->item->getItem() << endl;
       printInorder(out, node->rightChild);
    } // end if
 } // end printInorder

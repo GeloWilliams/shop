@@ -91,12 +91,21 @@ class Customer : public Comparable {
 
       /**  -----------------------------------------------------------------
          getItem
+         -- Prints all transactions for an individual Customer
+         @pre:    none
+         @post:   a list of Customer transactions is sent to the caller in
+                  string format
+         @return: a list of transactions for a single Customer in string format */
+      virtual string getItem() const;
+
+      /**  -----------------------------------------------------------------
+         getInfo
          -- a string containing the Customer description is returned. Each detail is separated by a 
             comma allowing the entire Customer description to be presented on one line
          @pre:    each data member in *this must contain an initialized value
          @post:   a string containing the values for each data member is returned to the caller 
          @return: a full Customer description in string format */
-      virtual string getItem() const;
+      virtual string getInfo() const;
 
       /**  -----------------------------------------------------------------
          addS
@@ -117,16 +126,6 @@ class Customer : public Comparable {
                          product description has been added to transactions_
          @param product: the Product included within the transaction */
       virtual void addB(Comparable* product);
-
-      /**  -----------------------------------------------------------------
-         Output Stream operator
-         -- Prints all transactions for this Customer
-         -- calls printTree
-         @pre:        none
-         @post:       a list of transactions is sent to the Output Stream operator
-         @param out:  the output stream operator
-         @param cstm: *this  */
-      friend ostream& operator<<(ostream &out, const Customer& cstm);
 
    protected:
       /** The first name of *this Customer */
