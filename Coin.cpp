@@ -95,30 +95,19 @@ bool Coin::operator==(const Comparable &rhs) const
    build
    -- Creates a new Coin*
    -- Receives a description for the Coin that is parsed for attributes
-   @pre:    *this has been instantiated
-   @post:   a new Coin* with attributes written is returned to the caller
-   @return: a new dynamically allocated Coin* */ 
-Coin* Coin::build(string description)
+   @pre:               *this has been instantiated
+   @post:              a new Coin* with attributes written is returned to the caller
+   @param key:         the Product key code
+   @param description: the Product description
+   @return:            a new dynamically allocated Coin* */ 
+Coin* Coin::build(char key, string description)
 {
    Coin* nm = new Coin();
    string s = description;
    string delimiter = ", ";
 
-   //parse key
-   string ke = s.substr(0, s.find(delimiter));
-   char keCh = s[0];
-   // erase substring
-   s.erase(0, (s.find(delimiter) + delimiter.length()));
-
-   // parse quantity
-   string qt = s.substr(0, s.find(delimiter));
-   int qtInt = stoi(qt);
-   // erase substring
-   s.erase(0, (s.find(delimiter) + delimiter.length()));
-
    // parse year
    string yr = s.substr(0, s.find(delimiter));
-   int yrInt = stoi(yr);
    // erase substring
    s.erase(0, (s.find(delimiter) + delimiter.length()));
    
@@ -132,9 +121,8 @@ Coin* Coin::build(string description)
    string tp = s.substr(0, s.find(delimiter));
    
 
-   nm->key_ = keCh;
-   nm->quantity_ = qtInt;
-   nm->year_ = yrInt;
+   nm->key_ = key;
+   nm->year_ = yr;
    nm->grade_ = gdInt;
    nm->type_ = tp;
 
@@ -150,9 +138,8 @@ Coin* Coin::build(string description)
    @return: a full Coin description in string format */
 string Coin::getItem() const
 {
-   string k(1, key_);
-   string toReturn = k + ", " + to_string(quantity_) + ", " 
-      + to_string(year_) + ", " + to_string(grade_) + ", " + type_;
+   string toReturn =  "(" + to_string(quantity_) + ") " + "Coin : " + year_ + ", " 
+   + to_string(grade_) + ", " + type_;
    return toReturn;
 } // end getItem
 

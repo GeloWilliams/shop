@@ -139,13 +139,17 @@ string Customer::getItem() const
    string n = "\n";
    string s = firstName_;
    if (lastName_ != "") {
-      s += + " " + lastName_ + n;
+      s += + " " + lastName_ + " (id: " + to_string(id_) + ") " + n;
    } else {
-      s += n;
+      s += " (id: " + to_string(id_) + ") " + n;
    } // end if
+   
 
    for (int i = 0; i < transactions_.size(); i++) {
-      s += "     " + transactions_[i] + n;
+      if (i != (transactions_.size() - 1))
+         s += "     " + transactions_[i] + n;
+      else 
+         s += "     " + transactions_[i];
    } // end getItem
    if (transactions_.size() == 0) 
       s = "";
@@ -175,19 +179,15 @@ string Customer::getInfo() const
    @param product: the Product included within the transaction */
 void Customer::addS(Comparable* product)
 {
-   string storeSale = "S, " + to_string(id_) + ", ";
+   string storeSale = "Sold ";
 
    // parse product information
-   string delimiter = ", ";
+   string delimiter = " ";
    string prodString = product->getItem();
-   //parse key
-   string ke = prodString.substr(0, prodString.find(delimiter));
-   // erase key substring
-   prodString.erase(0, (prodString.find(delimiter) + delimiter.length()));
-   // erase quantity substring
+   //erase quantity
    prodString.erase(0, (prodString.find(delimiter) + delimiter.length()));
 
-   storeSale += ke + ", " + prodString;
+   storeSale += prodString;
    transactions_.push_back(storeSale);
 } // end addP
 
@@ -201,18 +201,14 @@ void Customer::addS(Comparable* product)
    @param product: the Product included within the transaction */
 void Customer::addB(Comparable* product)
 {
-   string storeBuy = "B, " + to_string(id_) + ", ";
+   string storeBuy = "Bought ";
 
    // parse product information
-   string delimiter = ", ";
+   string delimiter = " ";
    string prodString = product->getItem();
-   //parse key
-   string ke = prodString.substr(0, prodString.find(delimiter));
-   // erase key substring
-   prodString.erase(0, (prodString.find(delimiter) + delimiter.length()));
-   // erase quantity substring
+   //erase quantity
    prodString.erase(0, (prodString.find(delimiter) + delimiter.length()));
 
-   storeBuy += ke + ", " + prodString;
+   storeBuy += prodString;
    transactions_.push_back(storeBuy);
 } // end addS

@@ -88,8 +88,10 @@ class Comic : public Product {
          -- Receives a description for the Comic that is parsed for attributes
          @pre:    *this has been instantiated
          @post:   a new Comic* with attributes written is returned to the caller
+         @param key:         the Product key code
+         @param description: the Product description
          @return: a new dynamically allocated Comic* */ 
-      virtual Comic* build(string description);
+      virtual Comic* build(char key, string description);
 
       /**  -----------------------------------------------------------------
          getItem

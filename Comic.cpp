@@ -102,28 +102,17 @@ bool Comic::operator==(const Comparable &rhs) const
    -- Receives a description for the Comic that is parsed for attributes
    @pre:    *this has been instantiated
    @post:   a new Comic* with attributes written is returned to the caller
+   @param key:         the Product key code
+   @param description: the Product description
    @return: a new dynamically allocated Comic* */ 
-Comic* Comic::build(string description)
+Comic* Comic::build(char key, string description)
 {
    Comic* nc = new Comic();
    string s = description;
    string delimiter = ", ";
 
-   //parse key
-   string ke = s.substr(0, s.find(delimiter));
-   char keCh = s[0];
-   // erase substring
-   s.erase(0, (s.find(delimiter) + delimiter.length()));
-
-   // parse quantity
-   string qt = s.substr(0, s.find(delimiter));
-   int qtInt = stoi(qt);
-   // erase substring
-   s.erase(0, (s.find(delimiter) + delimiter.length()));
-
    // parse year
    string yr = s.substr(0, s.find(delimiter));
-   int yrInt = stoi(yr);
    // erase substring
    s.erase(0, (s.find(delimiter) + delimiter.length()));
 
@@ -141,9 +130,8 @@ Comic* Comic::build(string description)
    string pb = s.substr(0, s.find(delimiter));
 
 
-   nc->key_ = keCh;
-   nc->quantity_ = qtInt;
-   nc->year_ = yrInt;
+   nc->key_ = key;
+   nc->year_ = yr;
    nc->grade_ = gd;
    nc->title_ = tl;
    nc->publisher_ = pb;
@@ -160,9 +148,8 @@ Comic* Comic::build(string description)
    @return: a full Comic description in string format */
 string Comic::getItem() const
 {
-   string k(1, key_);
-   string toReturn = k + ", " + to_string(quantity_) + ", "
-      + to_string(year_) + ", " + grade_ + ", " + title_ + ", " + publisher_;
+   string toReturn = "(" + to_string(quantity_) + ") " + "Comic : " + year_ + ", " 
+   + grade_ + ", " + title_ + ", " + publisher_;
    return toReturn;
 } // end getItem
 

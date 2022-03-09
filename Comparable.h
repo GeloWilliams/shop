@@ -82,10 +82,13 @@ class Comparable {
          build
          -- Creates a new Comparable*
          -- Receives a description for the Comparable that is parsed for attributes
-         @pre:    *this has been instantiated
-         @post:   a new Comparable* with attributes written is returned to the caller
+         @pre:               *this has been instantiated
+         @post:              a new Comparable* with attributes written is returned 
+                             to the caller
+         @param key:         the Comparable key code
+         @param description: the Comparable description
          @return: a new dynamically allocated Comparable* */ 
-      virtual Comparable* build(string description) { return nullptr; }
+      virtual Comparable* build(char key, string description) { return nullptr; }
 
       /**  -----------------------------------------------------------------
          getItem
@@ -118,7 +121,6 @@ class Comparable {
          @post:   quantity_ has been increase by 1 */
       virtual void increase(){}
 
-   protected:
       /** The Comparable key */
       char key_;
 

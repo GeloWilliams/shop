@@ -85,10 +85,12 @@ class Coin : public Product {
          build
          -- Creates a new Coin*
          -- Receives a description for the Coin that is parsed for attributes
-         @pre:    *this has been instantiated
-         @post:   a new Coin* with attributes written is returned to the caller
-         @return: a new dynamically allocated Coin* */ 
-      virtual Coin* build(string description);
+         @pre:               *this has been instantiated
+         @post:              a new Coin* with attributes written is returned to the caller
+         @param key:         the Product key code
+         @param description: the Product description
+         @return:            a new dynamically allocated Coin* */ 
+      virtual Coin* build(char key, string description);
 
       /**  -----------------------------------------------------------------
          getItem

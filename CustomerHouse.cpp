@@ -171,7 +171,8 @@ string CustomerHouse::getTransactions(int id)
 {
    string s = "";
    Customer* c = get(id);
-   s = c->getItem();
+   if (c != nullptr)
+      s = c->getItem();
    return s;
 } // end get
 

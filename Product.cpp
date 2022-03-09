@@ -90,40 +90,30 @@ bool Product::operator==(const Comparable &rhs) const
    build
    -- Creates a new Product*
    -- Receives a description for the Product that is parsed for attributes
-   @pre:    *this has been instantiated
-   @post:   a new Product* with attributes written is returned to the caller
-   @return: a new dynamically allocated Product* */ 
-Product* Product::build(string description)
+   @pre:               *this has been instantiated
+   @post:              a new Product* with attributes written is returned 
+                        to the caller
+   @param key:         the Product key code
+   @param description: the Product description
+   @return:            a new dynamically allocated Product */ 
+Product* Product::build(char key, string description)
 {
    Product* np = new Product();
    string s = description;
    string delimiter = ", ";
-   
-   //parse key
-   string ke = s.substr(0, s.find(delimiter));
-   char keCh = s[0];
-   // erase substring
-   s.erase(0, (s.find(delimiter) + delimiter.length()));
-
-   // parse quantity
-   string qt = s.substr(0, s.find(delimiter));
-   int qtInt = stoi(qt);
-   // erase substring
-   s.erase(0, (s.find(delimiter) + delimiter.length()));
 
    // parse year
    string yr = s.substr(0, s.find(delimiter));
-   int yrInt = stoi(yr);
    // erase substring
    s.erase(0, (s.find(delimiter) + delimiter.length()));
    
    // parse name
    string nm = s.substr(0, s.find(delimiter));
    
-   np->key_ = keCh;
-   np->quantity_ = qtInt;
-   np->year_ = yrInt;
+   np->key_ = key;
+   np->year_ = yr;
    np->name_ = nm;
+
    return np;
 } // end build
 
@@ -136,9 +126,9 @@ Product* Product::build(string description)
    @return: a full Product description in string format */
 string Product::getItem() const
 {
-   string k(1, key_);
-   string toReturn = k + ", " + to_string(quantity_) + ", " 
-      + to_string(year_) + ", " + name_;
+   string toReturn = "(" + to_string(quantity_) + ") " + "Product : " + year_
+   + ", " + name_;
+
    return toReturn;
 } // end getItem
 

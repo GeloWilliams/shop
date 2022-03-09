@@ -66,5 +66,5 @@ class CustTransaction : public Transaction {
       virtual void customer(int id, CustomerHouse &ch) 
       {
          cout << ch.getTransactions(id) << endl;
-      }
+      } // end customer
 };

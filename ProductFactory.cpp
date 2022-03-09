@@ -55,30 +55,35 @@ using namespace std;
    -- Calls insertItem to store a Product* object in hashTable_
    -- Used for callers to create a dynamically allocated Comparable
    @pre:               hashTable_ contains at least one non-conflicting slot
-   @post:              a new HashNode object is stored in hashTable_
-   @param description: the full description of the Product
+   @post:              a Comparable is stored in hashTable_
+   @param key:         the Product key code
+   @param quantity:    the Product quantity
+   @param description: the Product description
    @return:            a new Product* with attributes written */
-Comparable* ProductFactory::create(string description)
+Comparable* ProductFactory::create(char key, int quantity, string description)
 {
-   char key = description[0];
    if (key == 'P') {
       Product p;
-      Comparable* pp = p.build(description);
+      Comparable* pp = p.build(key, description);
+      pp->quantity_ = quantity;
       insertItem(key, pp);
       return pp;
    } else if (key == 'M') {
       Coin m;
-      Comparable* mp = m.build(description);
+      Comparable* mp = m.build(key, description);
+      mp->quantity_ = quantity;
       insertItem(key, mp);
       return mp;
    } else if (key == 'C') {
       Comic c;
-      Comparable* cp = c.build(description);
+      Comparable* cp = c.build(key, description);
+      cp->quantity_ = quantity;
       insertItem(key, cp);
       return cp;
    } else if (key == 'S') {
       SportsCard s;
-      Comparable* sp = s.build(description);
+      Comparable* sp = s.build(key, description);
+      sp->quantity_ = quantity;
       insertItem(key, sp);
       return sp;
    }
@@ -134,22 +139,22 @@ Comparable* ProductFactory::remove(string description)
    char key = description[0];
    if (key == 'P') {
       Product p;
-      Comparable* pp = p.build(description);
+      Comparable* pp = p.build(key, description);
       removeItem(key, pp);
       return pp;
    } else if (key == 'M') {
       Coin m;
-      Comparable* mp = m.build(description);
+      Comparable* mp = m.build(key, description);
       removeItem(key, mp);
       return mp;
    } else if (key == 'C') {
       Comic c;
-      Comparable* cp = c.build(description);
+      Comparable* cp = c.build(key, description);
       removeItem(key, cp);
       return cp;
    } else if (key == 'S') {
       SportsCard s;
-      Comparable* sp = s.build(description);
+      Comparable* sp = s.build(key, description);
       removeItem(key, sp);
       return sp;
    }
@@ -183,25 +188,34 @@ Comparable* ProductFactory::removeItem(char key, Comparable *&item)
    @return:            a Product* matching the description given */
 Comparable* ProductFactory::get(string description)
 {
-   char key = description[0];
+   string delimiter = ", ";
+   string s = description;
+
+
+   //parse key
+   string ke = s.substr(0, s.find(delimiter));
+   char key = s[0];
+   // erase substring
+   s.erase(0, (s.find(delimiter) + delimiter.length()));
+  
    int hashValue = hashFunction(key);
 
    if (key == 'P') {
       Product p;
-      Comparable* pp = p.build(description);
+      Comparable* pp = p.build(key, s);
       return hashTable_[hashValue].retrieve(*pp);
    } else if (key == 'M') {
       Coin m;
-      Comparable* mp = m.build(description);
+      Comparable* mp = m.build(key, s);
       return hashTable_[hashValue].retrieve(*mp);
    } else if (key == 'C') {
       Comic c;
-      Comparable* cp = c.build(description);
+      Comparable* cp = c.build(key, s);
       return hashTable_[hashValue].retrieve(*cp);
    } else if (key == 'S') {
-      SportsCard s;
-      Comparable* sp = s.build(description);
-      return hashTable_[hashValue].retrieve(*sp);
+      SportsCard sp;
+      Comparable* spo = sp.build(key, s);
+      return hashTable_[hashValue].retrieve(*spo);
    }
    return nullptr;
 } // end get

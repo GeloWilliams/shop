@@ -87,8 +87,10 @@ class SportsCard : public Product {
          -- Receives a description for the SportsCard that is parsed for attributes
          @pre:    *this has been instantiated
          @post:   a new SportsCard* with attributes written is returned to the caller
+         @param key:         the Product key code
+         @param description: the Product description
          @return: a new dynamically allocated SportsCard* */ 
-      virtual SportsCard* build(string description);
+      virtual SportsCard* build(char key, string description);
 
       /**  -----------------------------------------------------------------
          getItem

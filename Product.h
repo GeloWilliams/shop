@@ -55,7 +55,7 @@ class Product : public Comparable {
          Constructor 
          @pre:  none.
          @post: a new Product object has been instantiated. */
-      Product() : name_(""), year_(-1) {}
+      Product() : name_(""), year_("") {}
 
       /**  -----------------------------------------------------------------
          Destructor
@@ -83,10 +83,13 @@ class Product : public Comparable {
          build
          -- Creates a new Product*
          -- Receives a description for the Product that is parsed for attributes
-         @pre:    *this has been instantiated
-         @post:   a new Product* with attributes written is returned to the caller
-         @return: a new dynamically allocated Product* */ 
-      virtual Product* build(string description);
+         @pre:               *this has been instantiated
+         @post:              a new Product* with attributes written is returned 
+                              to the caller
+         @param key:         the Product key code
+         @param description: the Product description
+         @return:            a new dynamically allocated Product */ 
+      virtual Product* build(char key, string description);
 
       /**  -----------------------------------------------------------------
          getItem
@@ -124,7 +127,7 @@ class Product : public Comparable {
       string name_;
       
       /** The year in which *this was released */
-      int year_;   
+      string year_;   
       
 };
 

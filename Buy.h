@@ -81,10 +81,12 @@ class Buy : public Transaction {
 
          // increase quantity
          Comparable* c = pf.get(subDescription);
-         c->increase();
+         if (c != nullptr) {
+            c->increase();
 
-         // customer sell
-         ch.cSell(cId, c);
-         
+            // customer sell
+            ch.cSell(cId, c);
+         } // end if
+
       } // end buy
 };

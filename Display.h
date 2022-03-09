@@ -66,6 +66,6 @@ class Display : public Transaction {
       {
          cout << "Inventory" << endl;
          cout << endl;
-         cout << pf << endl;
+         cout << pf;
       } // end display
 };

@@ -72,9 +72,11 @@ class ProductFactory {
          -- Used for callers to create a dynamically allocated Comparable
          @pre:               hashTable_ contains at least one non-conflicting slot
          @post:              a Comparable is stored in hashTable_
-         @param description: the full description of the Product
+         @param key:         the Product key code
+         @param quantity:    the Product quantity
+         @param description: the Product description
          @return:            a new Product* with attributes written */
-      Comparable* create(string description);
+      Comparable* create(char key, int quantity, string description);
 
       /**  -----------------------------------------------------------------
          remove

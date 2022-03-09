@@ -102,28 +102,17 @@ bool SportsCard::operator==(const Comparable &rhs) const
    -- Receives a description for the SportsCard that is parsed for attributes
    @pre:    *this has been instantiated
    @post:   a new SportsCard* with attributes written is returned to the caller
+   @param key:         the Product key code
+   @param description: the Product description
    @return: a new dynamically allocated SportsCard* */ 
-SportsCard* SportsCard::build(string description)
+SportsCard* SportsCard::build(char key, string description)
 {
    SportsCard* sc = new SportsCard();
    string s = description;
    string delimiter = ", ";
 
-   //parse key
-   string ke = s.substr(0, s.find(delimiter));
-   char keCh = s[0];
-   // erase substring
-   s.erase(0, (s.find(delimiter) + delimiter.length()));
-
-   // parse quantity
-   string qt = s.substr(0, s.find(delimiter));
-   int qtInt = stoi(qt);
-   // erase substring
-   s.erase(0, (s.find(delimiter) + delimiter.length()));
-
    // parse year
    string yr = s.substr(0, s.find(delimiter));
-   int yrInt = stoi(yr);
    // erase substring
    s.erase(0, (s.find(delimiter) + delimiter.length()));
 
@@ -140,9 +129,8 @@ SportsCard* SportsCard::build(string description)
    // parse manufacturer
    string mn = s.substr(0, s.find(delimiter));
 
-   sc->key_ = keCh;
-   sc->quantity_ = qtInt;
-   sc->year_ = yrInt;
+   sc->key_ = key;
+   sc->year_ = yr;
    sc->grade_ = gd;
    sc->player_ = pl;
    sc->manufacturer_ = mn;
@@ -160,8 +148,8 @@ SportsCard* SportsCard::build(string description)
 string SportsCard::getItem() const
 {
    string k(1, key_);
-   string toReturn = k + ", " + to_string(quantity_) + ", " 
-      + to_string(year_) + ", " + grade_ + ", " + player_ + ", " + manufacturer_;
+   string toReturn = "(" + to_string(quantity_) + ") " + "Sports Card : " + year_ + ", " 
+   + grade_ + ", " + player_ + ", " + manufacturer_ ;
    return toReturn;
 } // end getItem
 

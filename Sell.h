@@ -76,15 +76,20 @@ class Sell : public Transaction {
          // parse Customer id
          string cs = subDescription.substr(0, subDescription.find(delimiter));
          int cId = stoi(cs);
+
          // erase substring
          subDescription.erase(0, (subDescription.find(delimiter) + delimiter.length()));
 
+
          // reduce quantity
          Comparable* c = pf.get(subDescription);
-         c->reduce();
 
-         // customer buy
-         ch.cBuy(cId, c);
-         
+         if (c != nullptr) {
+
+            c->reduce();
+            // customer buy
+            ch.cBuy(cId, c);
+         } // end if
       } // end sell
 };
+
