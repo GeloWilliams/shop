@@ -55,16 +55,18 @@ using namespace std;
 ActionStation::ActionStation() : actionTable_()
 {
    // set up subclasses
-   Sell *s = new Sell();
-   actionTable_[2] = s;
-   Buy *b = new Buy();
-   actionTable_[4] = b;
-   CustTransaction *t = new CustTransaction();
-   actionTable_[6] = t;
-   Display *d = new Display();
-   actionTable_[8] = d;
-   History *h = new History();
-   actionTable_[10] = h;
+   // Sell *s = new Sell();
+   // actionTable_[2] = s;
+   // Buy *b = new Buy();
+   // actionTable_[4] = b;
+   // CustTransaction *t = new CustTransaction();
+   // actionTable_[6] = t;
+   // Display *d = new Display();
+   // actionTable_[8] = d;
+   // delete d;
+   // History *h = new History();
+   // actionTable_[10] = h;
+   // delete h;
 } // end constructor
 
 /**  -----------------------------------------------------------------
@@ -74,8 +76,10 @@ ActionStation::ActionStation() : actionTable_()
 ActionStation::~ActionStation()
 {
    for (int i = 0; i < ACTIONS_; i++) {
-      delete actionTable_[i];
-      actionTable_[i] = nullptr;
+      if (actionTable_[i] != nullptr) {
+         delete actionTable_[i];
+         actionTable_[i] = nullptr;
+      } // end if
    } // end for
 } // end destructor
 
@@ -126,14 +130,26 @@ void ActionStation::transact(string description, ProductFactory &pf, CustomerHou
 void ActionStation::use(char key, string subDescription, ProductFactory &pf, CustomerHouse &ch)
 {
    if (key == 'S') {
+      Sell *s = new Sell();
+      actionTable_[2] = s;
       actionTable_[2]->sell(subDescription, pf, ch);
+      delete s;
+      actionTable_[2] = nullptr;
    } else if (key == 'B') {
+      Buy *b = new Buy;
+      actionTable_[4] = b;
       actionTable_[4]->buy(subDescription, pf, ch);
+      delete b;
+      actionTable_[4] = nullptr;
    } else if (key == 'C') {
       //parse id
       string i = subDescription.substr(0, subDescription.find(", "));
       int idInt = stoi(i);
+      CustTransaction *t = new CustTransaction();
+      actionTable_[6] = t;
       actionTable_[6]->customer(idInt, ch);
+      delete t;
+      actionTable_[6] = nullptr;
    } // end if
 } // end use
 
@@ -148,7 +164,11 @@ void ActionStation::use(char key, string subDescription, ProductFactory &pf, Cus
    @param pf    a ProductFactory object */
 void ActionStation::viewInv(ProductFactory &pf)
 {
+   Display* d = new Display();
+   actionTable_[8] = d;
    actionTable_[8]->display(pf);
+   delete d;
+   actionTable_[8] = nullptr;
 } // end viewInv
 
 /**  -----------------------------------------------------------------
@@ -162,5 +182,9 @@ void ActionStation::viewInv(ProductFactory &pf)
    @param ch    a CustomerHouse object  */
 void ActionStation::viewCus(CustomerHouse &ch)
 {
+   History* h = new History();
+   actionTable_[10] = h;
    actionTable_[10]->history(ch);
+   delete h;
+   actionTable_[10] = nullptr;
 } // end viewCus
