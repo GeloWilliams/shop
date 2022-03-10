@@ -61,7 +61,7 @@ class Transaction {
          Destructor
          @pre:  the Constructor has been called.
          @post: all data that was dynamically allocated has been removed and deallocated. */
-      virtual ~Transaction() {}
+      virtual ~Transaction() = default;
 
       /**  -----------------------------------------------------------------
          sell

@@ -54,7 +54,6 @@ class ProductFactory;
 class CustomerHouse;
 
 class Buy : public Transaction {
-   public:
       /**  -----------------------------------------------------------------
          buy
          -- a string containing the Transaction description is read and parsed. The details
