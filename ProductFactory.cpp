@@ -203,19 +203,27 @@ Comparable* ProductFactory::get(string description)
    if (key == 'P') {
       Product p;
       Comparable* pp = p.build(key, s);
-      return hashTable_[hashValue].retrieve(*pp);
+      Comparable* toReturn = hashTable_[hashValue].retrieve(*pp);
+      delete pp;
+      return toReturn;
    } else if (key == 'M') {
       Coin m;
       Comparable* mp = m.build(key, s);
-      return hashTable_[hashValue].retrieve(*mp);
+      Comparable* toReturn = hashTable_[hashValue].retrieve(*mp);
+      delete mp;
+      return toReturn;
    } else if (key == 'C') {
       Comic c;
       Comparable* cp = c.build(key, s);
-      return hashTable_[hashValue].retrieve(*cp);
+      Comparable* toReturn = hashTable_[hashValue].retrieve(*cp);
+      delete cp;
+      return toReturn;
    } else if (key == 'S') {
       SportsCard sp;
       Comparable* spo = sp.build(key, s);
-      return hashTable_[hashValue].retrieve(*spo);
+      Comparable* toReturn = hashTable_[hashValue].retrieve(*spo);
+      delete spo;
+      return toReturn;
    }
    return nullptr;
 } // end get
