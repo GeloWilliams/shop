@@ -54,6 +54,19 @@ class ProductFactory;
 class CustomerHouse;
 
 class Buy : public Transaction {
+   public:
+      /**  -----------------------------------------------------------------
+         Constructor 
+         @pre:  none.
+         @post: a new Transaction object has been instantiated. */
+      Buy() {}
+
+      /**  -----------------------------------------------------------------
+         Destructor
+         @pre:  the Constructor has been called.
+         @post: all data that was dynamically allocated has been removed and deallocated. */
+      ~Buy() = default;
+
       /**  -----------------------------------------------------------------
          buy
          -- a string containing the Transaction description is read and parsed. The details

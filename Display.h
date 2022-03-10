@@ -55,6 +55,18 @@ class ProductFactory;
 class Display : public Transaction {
    public:
       /**  -----------------------------------------------------------------
+         Constructor 
+         @pre:  none.
+         @post: a new Transaction object has been instantiated. */
+      Display() {}
+
+      /**  -----------------------------------------------------------------
+         Destructor
+         @pre:  the Constructor has been called.
+         @post: all data that was dynamically allocated has been removed and deallocated. */
+      ~Display() = default;
+
+      /**  -----------------------------------------------------------------
          display
          -- Commands ProductFactory to print the contents of its inventory, 
          skipping any items with a quantity of 0

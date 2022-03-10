@@ -56,6 +56,18 @@ class CustomerHouse;
 class Sell : public Transaction {
    public:
       /**  -----------------------------------------------------------------
+         Constructor 
+         @pre:  none.
+         @post: a new Transaction object has been instantiated. */
+      Sell() {}
+
+      /**  -----------------------------------------------------------------
+         Destructor
+         @pre:  the Constructor has been called.
+         @post: all data that was dynamically allocated has been removed and deallocated. */
+      ~Sell() = default;
+      
+      /**  -----------------------------------------------------------------
          sell
          -- a string containing the Transaction description is read and parsed. The details
             of the transaction will generate an interaction between ProductFactory and 

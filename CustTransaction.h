@@ -55,6 +55,18 @@ class CustomerHouse;
 class CustTransaction : public Transaction {
    public:
       /**  -----------------------------------------------------------------
+         Constructor 
+         @pre:  none.
+         @post: a new Transaction object has been instantiated. */
+      CustTransaction() {}
+
+      /**  -----------------------------------------------------------------
+         Destructor
+         @pre:  the Constructor has been called.
+         @post: all data that was dynamically allocated has been removed and deallocated. */
+      ~CustTransaction() = default;
+
+      /**  -----------------------------------------------------------------
          customer
          -- Commands CustomerHouse to call the Customer matching the id passed 
             to call the Customer to print out all transactions in chronological order

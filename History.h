@@ -54,6 +54,18 @@ class CustomerHouse;
 class History : public Transaction {
    public:
       /**  -----------------------------------------------------------------
+         Constructor 
+         @pre:  none.
+         @post: a new Transaction object has been instantiated. */
+      History() {}
+
+      /**  -----------------------------------------------------------------
+         Destructor
+         @pre:  the Constructor has been called.
+         @post: all data that was dynamically allocated has been removed and deallocated. */
+      ~History() = default;
+
+      /**  -----------------------------------------------------------------
          history
          -- Commands CustomerHouse to print all transactions by every Customer,
             listed in alphabetical order by first name
