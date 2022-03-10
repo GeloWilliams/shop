@@ -44,7 +44,7 @@
    If all entries are incorrectly formatted, an error message will be printed to the user. */
 
 #include <iostream>
-#include <iomanip>
+#include <string>
 #include "ProductFactory.h"
 using namespace std;
 

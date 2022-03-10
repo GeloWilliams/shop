@@ -44,6 +44,7 @@
    If all entries are incorrectly formatted, an error message will be printed to the user. */
 
 #include <iostream>
+#include <string>
 #include "CustomerHouse.h"
 using namespace std;
 

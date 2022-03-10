@@ -45,7 +45,7 @@
 
 #pragma once
 #include <iostream>
-#include <vector>
+#include <string>
 #include "Transaction.h"
 
 using namespace std;

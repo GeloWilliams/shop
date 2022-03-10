@@ -2,7 +2,7 @@
 /**
 g++ -g -std=c++11 -o main test.cpp ProductFactory.cpp Product.cpp Coin.cpp Comic.cpp SportsCard.cpp CustomerHouse.cpp Customer.cpp BST.cpp ActionStation.cpp Store.cpp
 g++ -g -std=c++11 -o main main.cpp ProductFactory.cpp Product.cpp Coin.cpp Comic.cpp SportsCard.cpp CustomerHouse.cpp Customer.cpp BST.cpp ActionStation.cpp Store.cpp
-   cd Desktop/Main/Study/CSS502/Programs/Program4
+cd Desktop/Main/Study/CSS502/Programs/Program4
 */  
 
 #include <iostream>
