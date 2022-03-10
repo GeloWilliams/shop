@@ -62,8 +62,9 @@ class History : public Transaction {
          @param ch: a CustomerHouse object   */
       virtual void history(CustomerHouse &ch) const 
       {
+         cout << endl; // cosmetic padding
          cout << "History" << endl;
          cout << endl;
-         cout << ch << endl;
+         cout << ch;
       } // end history
 };

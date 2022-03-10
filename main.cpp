@@ -83,5 +83,5 @@ int main()
       stor.doBusiness(fileInput);
    } // end while
    
-
+   cout << endl; 
 } // end main

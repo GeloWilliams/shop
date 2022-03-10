@@ -146,10 +146,7 @@ string Customer::getItem() const
    
 
    for (int i = 0; i < transactions_.size(); i++) {
-      if (i != (transactions_.size() - 1))
-         s += "     " + transactions_[i] + n;
-      else 
-         s += "     " + transactions_[i];
+      s += "     " + transactions_[i];
    } // end getItem
    if (transactions_.size() == 0) 
       s = "";

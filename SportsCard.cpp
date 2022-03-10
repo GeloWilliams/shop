@@ -149,7 +149,7 @@ string SportsCard::getItem() const
 {
    string k(1, key_);
    string toReturn = "(" + to_string(quantity_) + ") " + "Sports Card : " + year_ + ", " 
-   + grade_ + ", " + player_ + ", " + manufacturer_ ;
+   + grade_ + ", " + player_ + ", " + manufacturer_ + "\n";
    return toReturn;
 } // end getItem
 

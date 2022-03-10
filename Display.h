@@ -64,6 +64,7 @@ class Display : public Transaction {
          @param pf: a ProductFactory object */
       virtual void display(ProductFactory &pf)
       {
+         cout << endl; // cosmetic padding
          cout << "Inventory" << endl;
          cout << endl;
          cout << pf;

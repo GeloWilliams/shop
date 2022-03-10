@@ -127,7 +127,7 @@ Product* Product::build(char key, string description)
 string Product::getItem() const
 {
    string toReturn = "(" + to_string(quantity_) + ") " + "Product : " + year_
-   + ", " + name_;
+   + ", " + name_ + "\n";
 
    return toReturn;
 } // end getItem

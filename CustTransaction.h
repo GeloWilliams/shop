@@ -65,6 +65,7 @@ class CustTransaction : public Transaction {
          @param ch  a CustomerHouse object*/
       virtual void customer(int id, CustomerHouse &ch) 
       {
+         cout << endl; // cosmetic padding
          cout << ch.getTransactions(id) << endl;
       } // end customer
 };

@@ -149,7 +149,7 @@ Comic* Comic::build(char key, string description)
 string Comic::getItem() const
 {
    string toReturn = "(" + to_string(quantity_) + ") " + "Comic : " + year_ + ", " 
-   + grade_ + ", " + title_ + ", " + publisher_;
+   + grade_ + ", " + title_ + ", " + publisher_ + "\n";
    return toReturn;
 } // end getItem
 

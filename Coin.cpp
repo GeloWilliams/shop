@@ -139,7 +139,7 @@ Coin* Coin::build(char key, string description)
 string Coin::getItem() const
 {
    string toReturn =  "(" + to_string(quantity_) + ") " + "Coin : " + year_ + ", " 
-   + to_string(grade_) + ", " + type_;
+   + to_string(grade_) + ", " + type_ + "\n";
    return toReturn;
 } // end getItem
 
